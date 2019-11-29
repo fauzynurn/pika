@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.mikelau.views.shimmer.ShimmerRecyclerViewX
+        android:id="@+id/pending_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:shimmer_demo_child_count="5"
+        app:shimmer_demo_layout="@layout/shimmer_bill_item"
+        app:shimmer_demo_layout_manager_type="linear_vertical"/>
+</LinearLayout>
+</layout>

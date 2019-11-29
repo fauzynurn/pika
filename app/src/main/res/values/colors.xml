@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#41BEFF</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="white">#FFFFFF</color>
+    <color name="greenTagihin">#3CD88D</color>
+    <color name="yellowTagihin">#FFDA44</color>
+    <color name="redTagihin">#FF7878</color>
+    <color name="black">#000000</color>
+    <color name="greyTagihin">#b2b2b2</color>
+    <color name="greySemiDark">#d6d6d6</color>
+    <color name="greyTagihin2">#fafafa</color>
+    <color name="greyLine">#dddddd</color>
+</resources>

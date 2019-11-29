@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="Data Master">
+    <item android:title="Data Master">
+        <menu>
+            <item
+                android:title="Data Tagihan" />
+            <item android:title="Data Work Order" />
+        </menu>
+    </item>
+</menu>

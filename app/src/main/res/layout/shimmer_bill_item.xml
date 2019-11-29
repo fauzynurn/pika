@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:padding="15dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <View
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@color/greySemiDark"/>
+                <View
+                    android:layout_marginStart="12dp"
+                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:background="@color/greySemiDark"
+                    />
+            </LinearLayout>
+            <View
+                android:layout_marginTop="5dp"
+                android:layout_width="150dp"
+                android:layout_height="20dp"
+                android:background="@color/greySemiDark"/>
+
+            <View
+                android:layout_marginTop="5dp"
+                android:layout_width="240dp"
+                android:layout_height="20dp"
+                android:background="@color/greySemiDark"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:background="@color/greyTagihin2"/>
+    </LinearLayout>
+</layout>
