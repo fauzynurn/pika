@@ -3,8 +3,11 @@
     <item android:title="Data Master">
         <menu>
             <item
+                android:id="@+id/regular_bill_item"
                 android:title="Data Tagihan" />
-            <item android:title="Data Work Order" />
+            <item
+                android:id="@+id/work_order_item"
+                android:title="Data Work Order" />
         </menu>
     </item>
 </menu>

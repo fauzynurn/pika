@@ -1,22 +1,5 @@
 package com.example.tagihin.view.search
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.view.View
-import android.widget.Toast
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.Observer
-import com.example.tagihin.R
-import com.example.tagihin.base.BaseActivity
-import com.example.tagihin.databinding.ActivityMainBinding
-import com.example.tagihin.utils.Consts
-import com.example.tagihin.view.home.HomeViewModel
-import com.example.tagihin.view.home.fragments.PaidFragment
-import com.example.tagihin.view.home.fragments.PendingFragment
-import com.example.tagihin.view.home.fragments.UnpaidFragment
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
-
 //class SearchActivity : BaseActivity<SearchViewModel,ActivityMainBinding>(SearchViewModel::class) {
 //
 //    override fun getLayoutRes(): Int = R.layout.activity_search

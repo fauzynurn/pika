@@ -1,18 +1,13 @@
-package com.example.tagihin.view.home.fragments
+package com.example.tagihin.view.home.fragments.regularbill.fragments
 
 import android.content.Intent
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tagihin.R
 import com.example.tagihin.base.BaseFragment
 import com.example.tagihin.data.remote.model.Bill
-import com.example.tagihin.databinding.FragmentPaidBinding
 import com.example.tagihin.databinding.FragmentPendingBinding
 import com.example.tagihin.utils.Consts
 import com.example.tagihin.view.detail.DetailBillActivity
