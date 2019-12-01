@@ -1,11 +1,14 @@
 package com.example.tagihin.view.detail
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.example.tagihin.R
 import com.example.tagihin.base.BaseActivity
 import com.example.tagihin.base.BaseActivityNoViewModel
@@ -33,7 +36,12 @@ class DetailBillActivity : BaseActivity<BillViewModel,ActivityDetailBillBinding>
             date.text = bill.tanggal
             note.text = if(bill.catatan == null) "Tidak ada catatan" else bill.catatan
         }
-
+        viewModel.updateBill.observe(this, Observer {
+                hideDialog()
+                setResult(Activity.RESULT_OK)
+                finish()
+                Toast.makeText(this, "Data tagihan berhasil diubah", Toast.LENGTH_SHORT).show()
+        })
         doSpecificStyling(statusString)
         dataBinding.changeStatusBtn.setOnClickListener {
             val btmSheet = ChangeStatusBottomSheet(bill.id, statusString)
@@ -66,12 +74,20 @@ class DetailBillActivity : BaseActivity<BillViewModel,ActivityDetailBillBinding>
                 dataBinding.dateContainer.visibility = View.GONE
                 dataBinding.status.setBackgroundColor(ContextCompat.getColor(this, R.color.redTagihin))
             }
+
+            Consts.UNPAID_SHORT -> {
+                dataBinding.amountMoneyLabel.text = "Jumlah harus dibayar"
+                dataBinding.dateContainer.visibility = View.GONE
+                dataBinding.status.text = Consts.UNPAID
+                dataBinding.status.setBackgroundColor(ContextCompat.getColor(this, R.color.redTagihin))
+            }
         }
 
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             android.R.id.home -> {
+                setResult(Activity.RESULT_CANCELED)
                 finish()
                 true
             }

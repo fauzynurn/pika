@@ -19,13 +19,14 @@ import com.example.tagihin.view.home.HomeViewModel
 class PaidFragment : BaseFragment<HomeViewModel, FragmentPaidBinding>(HomeViewModel::class) {
     private var billAdapter: BillAdapter? = null
     private var list: List<Bill> = listOf()
-
     override fun getLayoutRes(): Int = R.layout.fragment_paid
 
     override fun initView(view: View) {}
 
     override fun onViewReady() {
         billAdapter = BillAdapter(
+            (activity as HomeActivity).multiSelectMode,
+            context!!,
             list,
             object : BillOnClickListener {
                 override fun onClick(bill: Bill) {
@@ -35,6 +36,14 @@ class PaidFragment : BaseFragment<HomeViewModel, FragmentPaidBinding>(HomeViewMo
                         it.putExtra("status", Consts.PAID)
                     }
                     )
+                }
+
+                override fun addToWOList(id: Int) {
+
+                }
+
+                override fun removeFromWOList(id: Int) {
+
                 }
 
             }

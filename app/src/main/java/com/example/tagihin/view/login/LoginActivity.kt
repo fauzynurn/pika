@@ -34,6 +34,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
                 pref.setLoginStatus(true)
                 pref.setName(it.data?.nama!!)
                 pref.setUsername(viewModel.username)
+                if(it.data?.foto != null) pref.setProfilePicUrl(it.data?.foto!!)
                 startActivity(Intent(this, HomeActivity::class.java))
                 finish()
             }else {
@@ -61,7 +62,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
             showMessage(it)
         })
 
-        val spannable = SpannableString("Silahkan masuk untuk dapat menggunakan aplikasi Tagihin")
+        val spannable = SpannableString("Silahkan masuk untuk dapat menggunakan aplikasi Pika")
         spannable.setSpan(
             ForegroundColorSpan(ContextCompat.getColor(this,R.color.colorPrimary)),
             48, spannable.length,

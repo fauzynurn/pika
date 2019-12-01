@@ -1,5 +1,6 @@
 package com.example.tagihin.view.detail
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Bundle
@@ -74,13 +75,6 @@ class ChangeStatusBottomSheet(val billId: Int, var statusString: String) : Botto
                     }
                 }
             )
-            it.updateBill.observe(activity as DetailBillActivity, Observer {
-                (activity as DetailBillActivity).apply {
-                    this.hideDialog()
-                    this.finish()
-                    Toast.makeText(this, "Data tagihan berhasil diubah", Toast.LENGTH_SHORT).show()
-                }
-            })
             it.dateChange.observe(activity as DetailBillActivity, Observer {
                 binding?.date?.text = it
             }
@@ -91,6 +85,6 @@ class ChangeStatusBottomSheet(val billId: Int, var statusString: String) : Botto
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {
         binding?.confirmBtn?.isEnabled = true
         (activity as DetailBillActivity).viewModel.dateChange.value =
-            String.format("%d/%d/%d", day, month, year)
+            String.format("%d-%d-%d", year, month + 1, day)
     }
 }

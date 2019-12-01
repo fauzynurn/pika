@@ -20,7 +20,8 @@
         <activity android:name=".view.home.HomeActivity" android:theme="@style/AppTheme"/>
         <activity android:name=".view.login.LoginActivity" android:theme="@style/AppTheme"/>
         <activity android:name=".view.detail.DetailBillActivity" android:theme="@style/AppTheme"/>
-<!--        <activity android:name=".view.search.SearchActivity" android:theme="@style/AppTheme"/>-->
+        <activity android:name=".view.search.SearchActivity" android:theme="@style/AppTheme"/>
+        <activity android:name=".view.home.WorkOrderActivity" android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

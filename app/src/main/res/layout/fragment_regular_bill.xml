@@ -260,7 +260,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto_black"
-                                android:text="Pika"
+                                android:text="Data Tagihan"
                                 android:textColor="@color/black"
                                 android:textSize="20sp" />
                         </LinearLayout>
@@ -288,6 +288,7 @@
                                 android:src="@drawable/ic_refresh_black_24dp" />
 
                             <ImageView
+                                android:id="@+id/search_icon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:src="@drawable/ic_search_black_24dp" />
@@ -297,19 +298,25 @@
                     </RelativeLayout>
                 </androidx.appcompat.widget.Toolbar>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
-            <com.ogaclejapan.smarttablayout.SmartTabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginTop="10dp"
-                app:layout_scrollFlags="scroll"
-                app:stl_defaultTabTextColor="@color/tab_color_selector"
-                app:stl_distributeEvenly="true"
-                app:stl_dividerColor="@color/white"
-                app:stl_indicatorColor="@color/colorPrimary"
-                app:stl_indicatorThickness="4dp"
-                app:stl_indicatorWithoutPadding="false"
-                app:stl_underlineColor="@color/white" />
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_scrollFlags="scroll"/>
+<!--            <com.ogaclejapan.smarttablayout.SmartTabLayout-->
+<!--                android:id="@+id/tabs"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="54dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                app:layout_scrollFlags="scroll"-->
+<!--                app:stl_defaultTabTextColor="@color/tab_color_selector"-->
+<!--                app:stl_distributeEvenly="true"-->
+<!--                app:stl_dividerColor="@color/white"-->
+<!--                app:stl_indicatorColor="@color/colorPrimary"-->
+<!--                app:stl_indicatorThickness="4dp"-->
+<!--                app:stl_indicatorWithoutPadding="false"-->
+<!--                app:stl_underlineColor="@color/white" />-->
 
         </com.google.android.material.appbar.AppBarLayout>
 

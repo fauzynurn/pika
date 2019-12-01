@@ -11,10 +11,7 @@ import com.example.tagihin.data.remote.model.Bill
 import com.example.tagihin.databinding.FragmentUnpaidBinding
 import com.example.tagihin.utils.Consts
 import com.example.tagihin.view.detail.DetailBillActivity
-import com.example.tagihin.view.home.BillAdapter
-import com.example.tagihin.view.home.BillOnClickListener
-import com.example.tagihin.view.home.HomeActivity
-import com.example.tagihin.view.home.HomeViewModel
+import com.example.tagihin.view.home.*
 
 class UnpaidWorkOrderFragment : BaseFragment<HomeViewModel, FragmentUnpaidBinding>(HomeViewModel::class){
     private var billAdapter : BillAdapter? = null
@@ -26,6 +23,8 @@ class UnpaidWorkOrderFragment : BaseFragment<HomeViewModel, FragmentUnpaidBindin
 
     override fun onViewReady() {
         billAdapter = BillAdapter(
+            false,
+            context!!,
             list,
             object : BillOnClickListener{
                 override fun onClick(bill: Bill) {
@@ -37,6 +36,14 @@ class UnpaidWorkOrderFragment : BaseFragment<HomeViewModel, FragmentUnpaidBindin
                     )
                 }
 
+                override fun addToWOList(id: Int) {
+
+                }
+
+                override fun removeFromWOList(id: Int) {
+
+                }
+
             }
         )
         dataBinding.unpaidRecycler.apply {
@@ -44,16 +51,16 @@ class UnpaidWorkOrderFragment : BaseFragment<HomeViewModel, FragmentUnpaidBindin
             adapter = billAdapter
             showShimmerAdapter()
         }
-        sharedviewModel.getUnpaidBill(0,10)
-        sharedviewModel.unpaidBill.observe(this, Observer {
+        sharedviewModel.getUnpaidWorkOrderBill(0,10)
+        sharedviewModel.unpaidWorkOrder.observe(this, Observer {
             dataBinding.unpaidRecycler.hideShimmerAdapter()
             billAdapter?.dataSource = it
             billAdapter?.notifyDataSetChanged()
 
         })
-        sharedviewModel.reloadLiveData.observe(activity as HomeActivity, Observer {
+        sharedviewModel.reloadWorkOrderData.observe(activity as WorkOrderActivity, Observer {
             dataBinding.unpaidRecycler.showShimmerAdapter()
-            sharedviewModel.getUnpaidBill(0, 10)
+            sharedviewModel.getUnpaidWorkOrderBill(0, 10)
         })
     }
 

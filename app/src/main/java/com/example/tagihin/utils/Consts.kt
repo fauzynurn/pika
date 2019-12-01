@@ -5,6 +5,7 @@ class Consts {
 
         const val PAID: String = "LUNAS"
         const val UNPAID : String = "BELUM LUNAS"
+        const val UNPAID_SHORT : String = "BELUM"
         const val UNPAID_ENG : String = "PENDING"
         const val PENDING : String = "TERTUNDA"
         const val CONNECT_TIMEOUT: Long = 100000

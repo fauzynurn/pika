@@ -11,10 +11,7 @@ import com.example.tagihin.data.remote.model.Bill
 import com.example.tagihin.databinding.FragmentPendingBinding
 import com.example.tagihin.utils.Consts
 import com.example.tagihin.view.detail.DetailBillActivity
-import com.example.tagihin.view.home.BillAdapter
-import com.example.tagihin.view.home.BillOnClickListener
-import com.example.tagihin.view.home.HomeActivity
-import com.example.tagihin.view.home.HomeViewModel
+import com.example.tagihin.view.home.*
 
 class PendingWorkOrderFragment : BaseFragment<HomeViewModel, FragmentPendingBinding>(HomeViewModel::class){
     private var billAdapter : BillAdapter? = null
@@ -26,6 +23,8 @@ class PendingWorkOrderFragment : BaseFragment<HomeViewModel, FragmentPendingBind
 
     override fun onViewReady() {
         billAdapter = BillAdapter(
+            false,
+            context!!,
             list,
             object : BillOnClickListener{
                 override fun onClick(bill: Bill) {
@@ -37,6 +36,14 @@ class PendingWorkOrderFragment : BaseFragment<HomeViewModel, FragmentPendingBind
                     )
                 }
 
+                override fun addToWOList(id: Int) {
+
+                }
+
+                override fun removeFromWOList(id: Int) {
+
+                }
+
             }
         )
         dataBinding.pendingRecycler.apply {
@@ -44,16 +51,16 @@ class PendingWorkOrderFragment : BaseFragment<HomeViewModel, FragmentPendingBind
             adapter = billAdapter
             showShimmerAdapter()
         }
-        sharedviewModel.getPendingBill(0,10)
-        sharedviewModel.pendingBill.observe(this, Observer {
+        sharedviewModel.getPendingWorkOrderBill(0,10)
+        sharedviewModel.pendingWorkOrder.observe(this, Observer {
             dataBinding.pendingRecycler.hideShimmerAdapter()
             billAdapter?.dataSource = it
             billAdapter?.notifyDataSetChanged()
 
         })
-        sharedviewModel.reloadLiveData.observe(activity as HomeActivity, Observer {
+        sharedviewModel.reloadWorkOrderData.observe(activity as WorkOrderActivity, Observer {
             dataBinding.pendingRecycler.showShimmerAdapter()
-            sharedviewModel.getPendingBill(0, 10)
+            sharedviewModel.getPendingWorkOrderBill(0, 10)
         })
     }
 

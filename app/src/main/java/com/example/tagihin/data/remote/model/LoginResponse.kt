@@ -1,7 +1,5 @@
 package com.example.tagihin.data.remote.model
 
-import com.google.gson.annotations.SerializedName
-
 class LoginResponse(
     override var status: Boolean,
     override var message: String,
@@ -10,5 +8,6 @@ class LoginResponse(
 
 data class Login(
     var id : Int,
-    var nama : String
+    var nama : String,
+    var foto : String
 )

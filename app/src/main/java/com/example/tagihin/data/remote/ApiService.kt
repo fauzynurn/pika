@@ -15,6 +15,21 @@ interface ApiService {
         ): Maybe<Response<LoginResponse>>
 
     @FormUrlEncoded
+    @POST("Api/buat_WO")
+    fun moveToWO(
+        @Field("username") username : String,
+        @Field("level_user") levelUser : Int,
+        @Body request : UpdateWORequest
+    ): Maybe<Response<GeneralResponse>>
+
+    @FormUrlEncoded
+    @POST("Api/searching")
+    fun search(
+        @Field("username") username : String,
+        @Field("query") query : String
+    ): Maybe<Response<BillResponse>>
+
+    @FormUrlEncoded
     @POST("Api/data_tagihan_lunas")
     fun getPaidBill(
         @Field("username") username : String,
@@ -45,6 +60,24 @@ interface ApiService {
     @FormUrlEncoded
     @POST("Api/data_tagihan_pending")
     fun getPendingBill(
+        @Field("username") username : String,
+        @Field("level_user") levelUser : Int,
+        @Field("page") page : Int,
+        @Field("size") size : Int
+    ): Maybe<Response<BillResponse>>
+
+    @FormUrlEncoded
+    @POST("Api/data_wo_pending")
+    fun getPendingWorkOrderBill(
+        @Field("username") username : String,
+        @Field("level_user") levelUser : Int,
+        @Field("page") page : Int,
+        @Field("size") size : Int
+    ): Maybe<Response<BillResponse>>
+
+    @FormUrlEncoded
+    @POST("Api/data_wo_belum")
+    fun getUnpaidWorkOrderBill(
         @Field("username") username : String,
         @Field("level_user") levelUser : Int,
         @Field("page") page : Int,

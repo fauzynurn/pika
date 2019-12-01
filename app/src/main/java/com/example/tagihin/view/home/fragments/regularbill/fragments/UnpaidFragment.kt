@@ -2,6 +2,7 @@ package com.example.tagihin.view.home.fragments.regularbill.fragments
 
 import android.content.Intent
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,27 +18,39 @@ import com.example.tagihin.view.home.HomeActivity
 import com.example.tagihin.view.home.HomeViewModel
 
 class UnpaidFragment : BaseFragment<HomeViewModel, FragmentUnpaidBinding>(HomeViewModel::class){
-    private var billAdapter : BillAdapter? = null
+    var billAdapter : BillAdapter? = null
     private var list : List<Bill> = listOf()
-
+    val DETAIL = 66
     override fun getLayoutRes(): Int = R.layout.fragment_unpaid
 
     override fun initView(view: View) {}
 
     override fun onViewReady() {
         billAdapter = BillAdapter(
+            (activity as HomeActivity).multiSelectMode,
+            context!!,
             list,
             object : BillOnClickListener{
                 override fun onClick(bill: Bill) {
-                    startActivity(
+                    activity?.startActivityForResult(
                         Intent(activity, DetailBillActivity::class.java).let {
                             it.putExtra("bill",bill)
                             it.putExtra("status", Consts.UNPAID)
                         }
-                    )
+                        ,DETAIL)
                 }
 
-            }
+                override fun addToWOList(id: Int) {
+                    (activity as HomeActivity).woList.add(id.toString())
+                    (activity as HomeActivity).viewModel.woListData.value = (activity as HomeActivity).woList.size
+                }
+
+                override fun removeFromWOList(id: Int) {
+                    (activity as HomeActivity).woList.remove(id.toString())
+                    (activity as HomeActivity).viewModel.woListData.value = (activity as HomeActivity).woList.size
+                }
+
+            }, true
         )
         dataBinding.unpaidRecycler.apply {
             layoutManager = LinearLayoutManager(activity)
@@ -51,6 +64,9 @@ class UnpaidFragment : BaseFragment<HomeViewModel, FragmentUnpaidBinding>(HomeVi
             billAdapter?.notifyDataSetChanged()
 
         })
+sharedviewModel.multiSelectState.observe(activity as HomeActivity, Observer {
+    billAdapter?.setMultiSelect(false)
+})
         sharedviewModel.reloadLiveData.observe(activity as HomeActivity, Observer {
             dataBinding.unpaidRecycler.showShimmerAdapter()
             sharedviewModel.getUnpaidBill(0, 10)

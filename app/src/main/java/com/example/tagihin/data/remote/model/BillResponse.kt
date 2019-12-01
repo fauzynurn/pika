@@ -18,5 +18,6 @@ data class Bill(
     var tanggal : String?,
     var keterangan : String,
     var tgl_pending : String?,
-    var catatan : String?
+    var catatan : String?,
+    var isSelected : Boolean = false
 ) : Serializable

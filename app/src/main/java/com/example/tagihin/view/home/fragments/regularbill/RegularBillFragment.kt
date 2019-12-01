@@ -1,5 +1,6 @@
 package com.example.tagihin.view.home.fragments.regularbill
 
+import android.content.Intent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -12,6 +13,7 @@ import com.example.tagihin.view.home.HomeViewModel
 import com.example.tagihin.view.home.fragments.regularbill.fragments.PaidFragment
 import com.example.tagihin.view.home.fragments.regularbill.fragments.PendingFragment
 import com.example.tagihin.view.home.fragments.regularbill.fragments.UnpaidFragment
+import com.example.tagihin.view.search.SearchActivity
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
 
@@ -33,8 +35,14 @@ class RegularBillFragment  : BaseFragment<HomeViewModel,FragmentRegularBillBindi
                 it.dataBinding.drawerContainer.openDrawer(it.dataBinding.drawer.root)
             }
         }
+
+        dataBinding.searchIcon.setOnClickListener {
+            startActivity(
+                Intent(activity,SearchActivity::class.java)
+            )
+        }
         dataBinding.viewPager.adapter = adapter
-        dataBinding.tabs.setViewPager(dataBinding.viewPager)
+        dataBinding.tabs.setupWithViewPager(dataBinding.viewPager)
         sharedviewModel.getBillStat()
         sharedviewModel.billStat.observe(this, Observer {
             with(dataBinding){

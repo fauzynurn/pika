@@ -1,9 +1,7 @@
 package com.example.tagihin.data.remote.repository
 
 import com.example.tagihin.data.remote.ApiService
-import com.example.tagihin.data.remote.model.BillRequest
-import com.example.tagihin.data.remote.model.BillResponse
-import com.example.tagihin.data.remote.model.BillStatResponse
+import com.example.tagihin.data.remote.model.*
 import com.example.tagihin.utils.PreferencesHelper
 import io.reactivex.Maybe
 import retrofit2.Response
@@ -28,9 +26,27 @@ class HomeRepository (val apiService : ApiService, val pref : PreferencesHelper)
         )
     }
 
+    fun getPendingWorkOrderBill(page : Int, size : Int) : Maybe<Response<BillResponse>> {
+        return apiService.getPendingWorkOrderBill(
+            pref.getUsername()!!,3,page,size
+        )
+    }
+
+    fun getUnpaidWorkOrderBill(page : Int, size : Int) : Maybe<Response<BillResponse>> {
+        return apiService.getUnpaidWorkOrderBill(
+            pref.getUsername()!!,3,page,size
+        )
+    }
+
     fun getBillStat() : Maybe<Response<BillStatResponse>> {
         return apiService.getBillStat(
             pref.getUsername()!!,3
+        )
+    }
+
+    fun moveToWO(list : ArrayList<String>) : Maybe<Response<GeneralResponse>> {
+        return apiService.moveToWO(
+            pref.getUsername()!!,3,UpdateWORequest(list)
         )
     }
 }

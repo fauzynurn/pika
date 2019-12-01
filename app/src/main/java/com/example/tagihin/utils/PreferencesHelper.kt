@@ -9,6 +9,7 @@ class PreferencesHelper(var context : Context){
         const val NAME = "NAME"
         const val CATER = "CATER"
         const val USERNAME = "USERNAME"
+        const val PROFILEPIC = "PROFILEPIC"
     }
 
     fun getLoginStatus() : Boolean {
@@ -44,6 +45,16 @@ class PreferencesHelper(var context : Context){
         editor.apply()
     }
 
+    fun setProfilePicUrl(url : String){
+        val settings = context.getSharedPreferences(PREF_FILE, 0)
+        val editor = settings.edit()
+        editor.putString(PROFILEPIC, url)
+        editor.apply()
+    }
+
+    fun getProfilePicUrl() : String?{
+        return context.getSharedPreferences(PREF_FILE,0).getString(PROFILEPIC,"")
+    }
     fun getCater() : String? {
         return context.getSharedPreferences(PREF_FILE,0).getString(CATER,"")
     }
