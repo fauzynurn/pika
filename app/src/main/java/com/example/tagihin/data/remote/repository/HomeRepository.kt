@@ -44,9 +44,9 @@ class HomeRepository (val apiService : ApiService, val pref : PreferencesHelper)
         )
     }
 
-    fun moveToWO(list : ArrayList<String>) : Maybe<Response<GeneralResponse>> {
+    fun moveToWO(list : HashMap<String,Int>) : Maybe<Response<GeneralResponse>> {
         return apiService.moveToWO(
-            pref.getUsername()!!,3,UpdateWORequest(list)
+            pref.getUsername()!!,3,list
         )
     }
 }

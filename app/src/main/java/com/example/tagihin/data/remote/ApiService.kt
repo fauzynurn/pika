@@ -19,7 +19,7 @@ interface ApiService {
     fun moveToWO(
         @Field("username") username : String,
         @Field("level_user") levelUser : Int,
-        @Body request : UpdateWORequest
+        @FieldMap request : HashMap<String,Int>
     ): Maybe<Response<GeneralResponse>>
 
     @FormUrlEncoded

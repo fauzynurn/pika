@@ -15,7 +15,7 @@ import com.example.tagihin.view.home.*
 
 class PendingWorkOrderFragment : BaseFragment<HomeViewModel, FragmentPendingBinding>(HomeViewModel::class){
     private var billAdapter : BillAdapter? = null
-    private var list : List<Bill> = listOf()
+    private var list : MutableList<Bill> = mutableListOf()
 
     override fun getLayoutRes(): Int = R.layout.fragment_pending
 
@@ -54,7 +54,7 @@ class PendingWorkOrderFragment : BaseFragment<HomeViewModel, FragmentPendingBind
         sharedviewModel.getPendingWorkOrderBill(0,10)
         sharedviewModel.pendingWorkOrder.observe(this, Observer {
             dataBinding.pendingRecycler.hideShimmerAdapter()
-            billAdapter?.dataSource = it
+            billAdapter?.dataSource?.addAll(it)
             billAdapter?.notifyDataSetChanged()
 
         })

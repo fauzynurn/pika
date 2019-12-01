@@ -33,7 +33,7 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityMainBinding>(HomeViewMo
     val listOfFragments = mutableListOf<Fragment>()
     var activeFragment: Fragment? = null
     var adapter: FragmentStatePagerAdapter? = null
-    var woList: ArrayList<String> = ArrayList()
+    var woList: ArrayList<Int> = ArrayList()
     var snackBar: Snackbar? = null
     var multiSelectMode: Boolean = false
     val DETAIL = 66
@@ -66,13 +66,13 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityMainBinding>(HomeViewMo
             }
 
             override fun onPageSelected(position: Int) {
-                if (snackBar != null) {
-                    if (snackBar?.isShown!!) {
-                        snackBar?.dismiss()
-                        woList.clear()
-                        multiSelectMode = false
-                    }
-                }
+//                if (snackBar != null) {
+//                    if (snackBar?.isShown!!) {
+//                        snackBar?.dismiss()
+//                        woList.clear()
+//                        multiSelectMode = false
+//                    }
+//                }
             }
 
         })
@@ -81,10 +81,16 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityMainBinding>(HomeViewMo
         }
 
         viewModel.updateWo.observe(this, androidx.lifecycle.Observer {
+            customLoad.hideDialog()
+            woList.clear()
+            viewModel.woListData.value = woList.size
             if (it) {
-                customLoad.hideDialog()
                 Toast.makeText(this, "Data berhasil ditambahkan ke WO", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(this, "Data sudah ada di WO", Toast.LENGTH_SHORT).show()
             }
+            //notify all adapter that they should reset their items
+            viewModel.resetSelection.value = true
         })
 
         dataBinding.hamburgerIcon.setOnClickListener {
@@ -125,14 +131,16 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityMainBinding>(HomeViewMo
         }
 
         viewModel.woListData.observe(this, androidx.lifecycle.Observer {
+            viewModel.woListLiveData.value = woList
             if (it == 0) {
-                snackBar?.dismiss()
                 viewModel.multiSelectState.value = false
+                snackBar?.dismiss()
 //                val fragment1 = adapter?.getItem(1) as PendingFragment
 //                val fragment2 = adapter?.getItem(2) as UnpaidFragment
 //                fragment1.billAdapter?.setMultiSelect(false)
 //                fragment2.billAdapter?.setMultiSelect(false)
             } else {
+                viewModel.multiSelectState.value = true
                 snackBar = Snackbar.make(
                     dataBinding.root,
                     String.format("%d item dipilih", it),
@@ -140,10 +148,11 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityMainBinding>(HomeViewMo
                 ).setAction(
                     "Tambah ke WO"
                 ) {
-                    Toast.makeText(this, woList.toString(), Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, woList.toString(), Toast.LENGTH_SHORT).show()
                     snackBar?.dismiss()
                     customLoad.showDialog()
                     viewModel.moveToWO(woList)
+                    viewModel.multiSelectState.value = false
                 }
                 snackBar?.show()
             }

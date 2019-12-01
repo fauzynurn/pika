@@ -18,7 +18,7 @@ import com.example.tagihin.view.home.HomeViewModel
 
 class PaidFragment : BaseFragment<HomeViewModel, FragmentPaidBinding>(HomeViewModel::class) {
     private var billAdapter: BillAdapter? = null
-    private var list: List<Bill> = listOf()
+    private var list: MutableList<Bill> = mutableListOf()
     override fun getLayoutRes(): Int = R.layout.fragment_paid
 
     override fun initView(view: View) {}
@@ -56,7 +56,7 @@ class PaidFragment : BaseFragment<HomeViewModel, FragmentPaidBinding>(HomeViewMo
         sharedviewModel.getPaidBill(0, 10)
         sharedviewModel.paidBill.observe(this, Observer {
             dataBinding.paidRecycler.hideShimmerAdapter()
-            billAdapter?.dataSource = it
+            billAdapter?.dataSource?.addAll(it)
             billAdapter?.notifyDataSetChanged()
 
         })

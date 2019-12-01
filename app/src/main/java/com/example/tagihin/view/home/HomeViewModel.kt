@@ -23,6 +23,8 @@ class HomeViewModel (val repo : HomeRepository) : ViewModel(){
     var woListData : MutableLiveData<Int> = MutableLiveData()
 
     var multiSelectState : MutableLiveData<Boolean> = MutableLiveData()
+    var woListLiveData : MutableLiveData<List<Int>> = MutableLiveData()
+    var resetSelection : MutableLiveData<Boolean> = MutableLiveData()
     private var disposable : Disposable? = null
     fun getPaidBill(page : Int, size : Int){
         disposable = repo.getPaidBill(page,size)
@@ -90,8 +92,12 @@ class HomeViewModel (val repo : HomeRepository) : ViewModel(){
 //        ))
     }
 
-    fun moveToWO(list : ArrayList<String>){
-        disposable = repo.moveToWO(list)
+    fun moveToWO(list : ArrayList<Int>){
+        val hashMap : HashMap<String,Int> = HashMap()
+        for((index, value) in list.withIndex()){
+            hashMap[String.format("checked_id[%d]", index)] = value
+        }
+        disposable = repo.moveToWO(hashMap)
             .subscribeOn(Schedulers.io())
             .subscribe({
                 updateWo.postValue(it.body()?.status)

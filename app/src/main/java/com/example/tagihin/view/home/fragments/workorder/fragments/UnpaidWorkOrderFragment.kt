@@ -15,7 +15,7 @@ import com.example.tagihin.view.home.*
 
 class UnpaidWorkOrderFragment : BaseFragment<HomeViewModel, FragmentUnpaidBinding>(HomeViewModel::class){
     private var billAdapter : BillAdapter? = null
-    private var list : List<Bill> = listOf()
+    private var list : MutableList<Bill> = mutableListOf()
 
     override fun getLayoutRes(): Int = R.layout.fragment_unpaid
 
@@ -54,7 +54,7 @@ class UnpaidWorkOrderFragment : BaseFragment<HomeViewModel, FragmentUnpaidBindin
         sharedviewModel.getUnpaidWorkOrderBill(0,10)
         sharedviewModel.unpaidWorkOrder.observe(this, Observer {
             dataBinding.unpaidRecycler.hideShimmerAdapter()
-            billAdapter?.dataSource = it
+            billAdapter?.dataSource?.addAll(it)
             billAdapter?.notifyDataSetChanged()
 
         })

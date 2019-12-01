@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
 
 class SearchActivity : BaseActivity<SearchViewModel, ActivitySearchBinding>(SearchViewModel::class) {
     private var billAdapter: BillAdapter? = null
-    private var list: List<Bill> = listOf()
+    private var list: MutableList<Bill> = mutableListOf()
     private var textChangeListener : Disposable? = null
     override fun getLayoutRes(): Int = R.layout.activity_search
 
@@ -76,7 +76,7 @@ class SearchActivity : BaseActivity<SearchViewModel, ActivitySearchBinding>(Sear
         }
         viewModel.searchResult.observe(this, Observer {
             dataBinding.searchRecycler.hideShimmerAdapter()
-            billAdapter?.dataSource = it
+            billAdapter?.dataSource?.addAll(it)
             billAdapter?.notifyDataSetChanged()
         })
     }

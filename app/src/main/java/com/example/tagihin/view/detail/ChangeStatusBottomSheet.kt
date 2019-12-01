@@ -69,8 +69,15 @@ class ChangeStatusBottomSheet(val billId: Int, var statusString: String) : Botto
             it.status.observe(
                 this, Observer {
                     if (it == "LUNAS") {
+                        binding?.confirmBtn?.isEnabled = true
                         binding?.dateContainer?.visibility = View.GONE
                     } else {
+                        if((activity as DetailBillActivity).viewModel.dateChange.value != ""){
+                            binding?.confirmBtn?.isEnabled = true
+                        }else{
+                            binding?.confirmBtn?.isEnabled = false
+                            binding?.date?.text = ""
+                        }
                         binding?.dateContainer?.visibility = View.VISIBLE
                     }
                 }

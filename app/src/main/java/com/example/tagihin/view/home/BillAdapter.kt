@@ -13,10 +13,11 @@ import com.example.tagihin.databinding.BillItemLayoutBinding
 class BillAdapter(
     var multiSelectMode: Boolean = false,
     var context: Context,
-    var dataSource: List<Bill>,
+    var dataSource: MutableList<Bill>,
     val onClickListener: BillOnClickListener,
     val multiSelectSupport: Boolean = false
 ) : RecyclerView.Adapter<BillAdapter.BillViewHolder>() {
+    var selectedList: MutableList<Int> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = BillItemLayoutBinding.inflate(inflater, parent, false)
@@ -37,28 +38,45 @@ class BillAdapter(
         fun onBind(bill: Bill) {
             with(binding) {
                 billItemContainer.setOnLongClickListener {
-                    if (!multiSelectMode) {
-                        multiSelectMode = true
-                        setItemState(bill, binding)
-                        if(bill.isSelected){
-                            onClickListener.addToWOList(bill.id)
-                        }else{
+                    if (selectedList.isEmpty()) {
+                        if (multiSelectMode) {
                             onClickListener.removeFromWOList(bill.id)
+                            setItemState(false, binding)
+                        } else {
+                            onClickListener.addToWOList(bill.id)
+                            setItemState(true, binding)
                         }
+                        notifyDataSetChanged()
+//                        setItemState(bill, binding)
+//                        if(bill.isSelected){
+//                            onClickListener.addToWOList(bill.id)
+//                        }else{
+//                            onClickListener.removeFromWOList(bill.id)
+//                        }
                     }
                     true
                 }
-                if (multiSelectSupport) {
-                    billItemContainer.setOnClickListener {
-                        if (multiSelectMode) {
-                            setItemState(bill, binding)
-                            if(bill.isSelected){
-                                onClickListener.addToWOList(bill.id)
-                            }else{
-                                onClickListener.removeFromWOList(bill.id)
-                            }
+                billItemContainer.setOnClickListener {
+                    if (selectedList.isNotEmpty()) {
+                        if (selectedList.contains(bill.id)) {
+                            onClickListener.removeFromWOList(bill.id)
+                            setItemState(false, binding)
+                        } else {
+                            onClickListener.addToWOList(bill.id)
+                            setItemState(true, binding)
                         }
+//                            setItemState(bill, binding)
+//                            if(bill.isSelected){
+//                                onClickListener.addToWOList(bill.id)
+//                            }else{
+//                                onClickListener.removeFromWOList(bill.id)
+//                            }
                     }
+                }
+                if(multiSelectMode){
+                    setItemState(selectedList.contains(bill.id), binding)
+                }else{
+                    setItemState(false, binding)
                 }
                 orderCode.text = bill.idpel
                 name.text = bill.nama
@@ -70,13 +88,13 @@ class BillAdapter(
         }
     }
 
-    fun setMultiSelect(isEnabled : Boolean){
+    fun setMultiSelect(isEnabled: Boolean) {
         multiSelectMode = isEnabled
     }
 
-    fun setItemState(bill: Bill, binding: BillItemLayoutBinding) {
+    fun setItemState(selected: Boolean, binding: BillItemLayoutBinding) {
         with(binding) {
-            if (!bill.isSelected) {
+            if (selected) {
                 billItemContainer.setBackgroundColor(
                     ContextCompat.getColor(
                         context,
@@ -95,12 +113,11 @@ class BillAdapter(
                 billDetailBtn.visibility = View.VISIBLE
             }
         }
-        bill.isSelected = !bill.isSelected
     }
 }
 
 interface BillOnClickListener {
     fun onClick(bill: Bill)
-    fun addToWOList(id : Int)
-    fun removeFromWOList(id : Int)
+    fun addToWOList(id: Int)
+    fun removeFromWOList(id: Int)
 }
