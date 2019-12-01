@@ -109,8 +109,11 @@ class PendingFragment : BaseFragment<HomeViewModel, FragmentPendingBinding>(Home
 
         sharedviewModel.getPendingBill(PAGE, 6)
         sharedviewModel.pendingBill.observe(this, Observer {
+            dataBinding.pendingRecycler.hideShimmerAdapter()
             mAllowLoadMore = if (it.isNotEmpty()) {
-                dataBinding.pendingRecycler.hideShimmerAdapter()
+                if(PAGE == 0){
+                    billAdapter?.dataSource?.clear()
+                }
                 billAdapter?.dataSource?.addAll(it)
                 billAdapter?.notifyDataSetChanged()
                 true
@@ -122,6 +125,7 @@ class PendingFragment : BaseFragment<HomeViewModel, FragmentPendingBinding>(Home
         })
 
         sharedviewModel.reloadLiveData.observe(activity as HomeActivity, Observer {
+            PAGE = 0
             dataBinding.pendingRecycler.showShimmerAdapter()
             sharedviewModel.getPendingBill(PAGE, 6)
         })

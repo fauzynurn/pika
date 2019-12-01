@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.tagihin.R
 import com.example.tagihin.base.BaseFragment
 import com.example.tagihin.data.remote.model.Bill
@@ -21,6 +22,9 @@ class UnpaidFragment : BaseFragment<HomeViewModel, FragmentUnpaidBinding>(HomeVi
     var billAdapter: BillAdapter? = null
     private var list: MutableList<Bill> = mutableListOf()
     val DETAIL = 66
+    val layoutManager = LinearLayoutManager(activity)
+    var PAGE = 0
+    var mAllowLoadMore = true
     override fun getLayoutRes(): Int = R.layout.fragment_unpaid
 
     override fun initView(view: View) {}
@@ -56,16 +60,42 @@ class UnpaidFragment : BaseFragment<HomeViewModel, FragmentUnpaidBinding>(HomeVi
 
             }, true
         )
+        val onScroll = object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) {
+                    val visibleItemCount = layoutManager.childCount
+                    val totalItemCount = layoutManager.itemCount
+                    val pastVisiblesItems = layoutManager.findLastVisibleItemPosition()
+                    if (mAllowLoadMore) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            PAGE += 6
+                            sharedviewModel.getUnpaidBill(PAGE, 6)
+                            mAllowLoadMore = false
+                        }
+                    }
+                }
+            }
+        }
         dataBinding.unpaidRecycler.apply {
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = this@UnpaidFragment.layoutManager
             adapter = billAdapter
+            addOnScrollListener(onScroll)
             showShimmerAdapter()
         }
-        sharedviewModel.getUnpaidBill(0, 10)
+        sharedviewModel.getUnpaidBill(PAGE, 6)
         sharedviewModel.unpaidBill.observe(this, Observer {
             dataBinding.unpaidRecycler.hideShimmerAdapter()
-            billAdapter?.dataSource?.addAll(it)
-            billAdapter?.notifyDataSetChanged()
+            mAllowLoadMore = if (it.isNotEmpty()) {
+                if(PAGE == 0){
+                    billAdapter?.dataSource?.clear()
+                }
+                billAdapter?.dataSource?.addAll(it)
+                billAdapter?.notifyDataSetChanged()
+                true
+            } else {
+                false
+            }
         })
         sharedviewModel.multiSelectState.observe(activity as HomeActivity, Observer {
             //    billAdapter?.setMultiSelect(false)
@@ -79,8 +109,9 @@ class UnpaidFragment : BaseFragment<HomeViewModel, FragmentUnpaidBinding>(HomeVi
             billAdapter?.selectedList = it.toMutableList()
         })
         sharedviewModel.reloadLiveData.observe(activity as HomeActivity, Observer {
+            PAGE = 0
             dataBinding.unpaidRecycler.showShimmerAdapter()
-            sharedviewModel.getUnpaidBill(0, 10)
+            sharedviewModel.getUnpaidBill(PAGE, 6)
         })
 
         sharedviewModel.resetSelection.observe(activity as HomeActivity, Observer {

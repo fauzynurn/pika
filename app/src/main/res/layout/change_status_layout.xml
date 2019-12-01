@@ -71,7 +71,7 @@
                         android:textSize="18sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/roboto_bold"
                         android:layout_centerVertical="true"
                         android:text="LUNAS" />
                 </RelativeLayout>

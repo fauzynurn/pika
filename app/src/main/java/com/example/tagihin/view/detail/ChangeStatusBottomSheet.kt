@@ -50,11 +50,6 @@ class ChangeStatusBottomSheet(val billId: Int, var statusString: String) : Botto
             datePickerDialog.show()
         }
         (activity as DetailBillActivity).setViewModel(binding!!)
-        if (statusString == Consts.PENDING) {
-            binding?.paidOffText?.visibility = View.VISIBLE
-            binding?.statusDropdown?.visibility = View.GONE
-            binding?.dateContainer?.visibility = View.GONE
-        }
         val adapter = ArrayAdapter<String>(
             context!!, android.R.layout.simple_dropdown_item_1line, OPTIONS
         )
@@ -72,11 +67,12 @@ class ChangeStatusBottomSheet(val billId: Int, var statusString: String) : Botto
                         binding?.confirmBtn?.isEnabled = true
                         binding?.dateContainer?.visibility = View.GONE
                     } else {
-                        if((activity as DetailBillActivity).viewModel.dateChange.value != ""){
+                        if((activity as DetailBillActivity).viewModel.dateChange.value != ""
+                            && (activity as DetailBillActivity).viewModel.dateChange.value != null){
                             binding?.confirmBtn?.isEnabled = true
                         }else{
                             binding?.confirmBtn?.isEnabled = false
-                            binding?.date?.text = ""
+                            binding?.date?.text = "Pilih Tanggal"
                         }
                         binding?.dateContainer?.visibility = View.VISIBLE
                     }

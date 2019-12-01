@@ -33,7 +33,7 @@ class BillViewModel (val repo : BillRepository) : ViewModel(){
 //        Timber.i("note: %s",note)
         //should be handled using rx with disabled button
         val date = if(status.value!! == Consts.PAID){
-            DateUtils.getCurrentDate("dd/MM/yyyy")
+            DateUtils.getCurrentDate("yyyy-MM-dd")
         }else{
             dateChange.value
         }

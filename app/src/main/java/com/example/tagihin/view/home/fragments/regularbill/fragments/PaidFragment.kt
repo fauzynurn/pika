@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.tagihin.R
 import com.example.tagihin.base.BaseFragment
 import com.example.tagihin.data.remote.model.Bill
@@ -19,6 +20,9 @@ import com.example.tagihin.view.home.HomeViewModel
 class PaidFragment : BaseFragment<HomeViewModel, FragmentPaidBinding>(HomeViewModel::class) {
     private var billAdapter: BillAdapter? = null
     private var list: MutableList<Bill> = mutableListOf()
+    var PAGE = 0
+    var mAllowLoadMore = true
+    val layoutManager = LinearLayoutManager(activity)
     override fun getLayoutRes(): Int = R.layout.fragment_paid
 
     override fun initView(view: View) {}
@@ -48,21 +52,49 @@ class PaidFragment : BaseFragment<HomeViewModel, FragmentPaidBinding>(HomeViewMo
 
             }
         )
+        val onScroll = object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) {
+                    val visibleItemCount = layoutManager.childCount
+                    val totalItemCount = layoutManager.itemCount
+                    val pastVisiblesItems = layoutManager.findLastVisibleItemPosition()
+                    if (mAllowLoadMore) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            PAGE += 6
+                            sharedviewModel.getPaidBill(PAGE, 6)
+                            mAllowLoadMore = false
+                        }
+                    }
+                }
+            }
+        }
         dataBinding.paidRecycler.apply {
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = this@PaidFragment.layoutManager
             adapter = billAdapter
+            addOnScrollListener(onScroll)
             showShimmerAdapter()
         }
-        sharedviewModel.getPaidBill(0, 10)
+        sharedviewModel.getPaidBill(PAGE, 6)
         sharedviewModel.paidBill.observe(this, Observer {
             dataBinding.paidRecycler.hideShimmerAdapter()
-            billAdapter?.dataSource?.addAll(it)
-            billAdapter?.notifyDataSetChanged()
+            mAllowLoadMore = if (it.isNotEmpty()) {
+                if(PAGE == 0){
+                    billAdapter?.dataSource?.clear()
+                }
+                billAdapter?.dataSource?.addAll(it)
+                billAdapter?.notifyDataSetChanged()
+                true
+            } else {
+                false
+
+            }
 
         })
         sharedviewModel.reloadLiveData.observe(activity as HomeActivity, Observer {
+            PAGE = 0
             dataBinding.paidRecycler.showShimmerAdapter()
-            sharedviewModel.getPaidBill(0, 10)
+            sharedviewModel.getPaidBill(PAGE, 6)
         })
     }
 
