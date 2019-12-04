@@ -76,6 +76,7 @@ class SearchActivity : BaseActivity<SearchViewModel, ActivitySearchBinding>(Sear
         }
         viewModel.searchResult.observe(this, Observer {
             dataBinding.searchRecycler.hideShimmerAdapter()
+            billAdapter?.dataSource?.clear()
             billAdapter?.dataSource?.addAll(it)
             billAdapter?.notifyDataSetChanged()
         })
