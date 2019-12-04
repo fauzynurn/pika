@@ -3,6 +3,7 @@ package com.example.tagihin
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.view.WindowManager
 import com.example.tagihin.base.BaseActivityNoViewModel
 import com.example.tagihin.databinding.ActivitySplashBinding
 import com.example.tagihin.view.home.HomeActivity
@@ -17,6 +18,8 @@ class SplashActivity : BaseActivityNoViewModel<ActivitySplashBinding>() {
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN)
         Handler().postDelayed({
             if (pref.getLoginStatus()) {
                 startActivity(
