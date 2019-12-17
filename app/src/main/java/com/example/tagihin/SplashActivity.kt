@@ -1,14 +1,18 @@
 package com.example.tagihin
 
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
 import com.example.tagihin.base.BaseActivityNoViewModel
 import com.example.tagihin.databinding.ActivitySplashBinding
+import com.example.tagihin.utils.receiver.ConnectivityChangeReceiver
 import com.example.tagihin.view.home.HomeActivity
 import com.example.tagihin.view.login.LoginActivity
 import timber.log.Timber
+
 
 class SplashActivity : BaseActivityNoViewModel<ActivitySplashBinding>() {
     override fun getLayoutRes(): Int = R.layout.activity_splash

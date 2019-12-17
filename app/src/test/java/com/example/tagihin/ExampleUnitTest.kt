@@ -4,6 +4,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.ceil
+import kotlin.math.roundToInt
 
 
 /**
@@ -19,11 +21,6 @@ class ExampleUnitTest {
 
     @Test
     fun dateTest(){
-        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-        val outputFormat = SimpleDateFormat("dd/MM/yyyy")
-        val date: Date = inputFormat.parse("2019-11-28T04:00:00.000+07:00")
-        val formattedDate: String = outputFormat.format(date)
-
-        assertEquals(formattedDate,"28/11/2019")
+        assertEquals(floatArrayOf(100.toFloat(),65.toFloat(),35.toFloat()), floatArrayOf(100.toFloat(),35.toFloat(),65.toFloat()).sortedArrayDescending())
     }
 }

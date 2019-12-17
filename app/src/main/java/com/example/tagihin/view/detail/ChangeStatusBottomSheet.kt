@@ -12,6 +12,7 @@ import android.widget.DatePicker
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.tagihin.databinding.ChangeStatusLayoutBinding
+import com.example.tagihin.utils.ConnectivityManager
 import com.example.tagihin.utils.Consts
 import com.example.tagihin.utils.Consts.Companion.OPTIONS
 import com.example.tagihin.widget.BottomSheet
@@ -57,7 +58,7 @@ class ChangeStatusBottomSheet(val billId: Int, var statusString: String) : Botto
         binding?.confirmBtn?.setOnClickListener {
             (activity as DetailBillActivity).let {
                 it.showDialog()
-                it.viewModel.updateBill(billId)
+                it.saveResponse(billId)
             }
         }
         (activity as DetailBillActivity).viewModel.let {

@@ -2,8 +2,10 @@ package com.example.tagihin.data.remote
 
 import com.example.tagihin.data.remote.model.*
 import io.reactivex.Maybe
+import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.*
+
 
 interface ApiService {
 
@@ -14,6 +16,12 @@ interface ApiService {
         @Field("password") password : String
         ): Maybe<Response<LoginResponse>>
 
+    @POST("Api/ubahWoOffline")
+    fun sendSavedRequest(
+        @Body body : SavedBillRequestBody
+    ) : Maybe<Response<GeneralResponse>>
+
+
     @FormUrlEncoded
     @POST("Api/buat_WO")
     fun moveToWO(
@@ -23,11 +31,48 @@ interface ApiService {
     ): Maybe<Response<GeneralResponse>>
 
     @FormUrlEncoded
-    @POST("Api/searching")
-    fun search(
+    @POST("Api/reset_WO")
+    fun resetWo(
         @Field("username") username : String,
-        @Field("query") query : String
-    ): Maybe<Response<BillResponse>>
+        @Field("level_user") levelUser : Int
+    ): Maybe<Response<GeneralResponse>>
+
+    @FormUrlEncoded
+    @POST("Api/reset_tagihan")
+    fun resetBill(
+        @Field("username") username : String,
+        @Field("level_user") levelUser : Int
+    ): Maybe<Response<GeneralResponse>>
+
+    @FormUrlEncoded
+    @POST("Api/searching")
+    fun searchUnpaid(
+        @Field("username") username : String,
+        @Field("query") query : String,
+        @Field("type") type : String,
+        @Field("page") page : Int,
+        @Field("size") size : Int
+    ): Maybe<Response<BillResponse<List<UnpaidBill>>>>
+
+    @FormUrlEncoded
+    @POST("Api/searching")
+    fun searchPending(
+        @Field("username") username : String,
+        @Field("query") query : String,
+        @Field("type") type : String,
+        @Field("page") page : Int,
+        @Field("size") size : Int
+    ): Maybe<Response<BillResponse<List<PendingBill>>>>
+
+    @FormUrlEncoded
+    @POST("Api/searching")
+    fun searchPaid(
+        @Field("username") username : String,
+        @Field("query") query : String,
+        @Field("type") type : String,
+        @Field("page") page : Int,
+        @Field("size") size : Int
+    ): Maybe<Response<BillResponse<List<PaidBill>>>>
 
     @FormUrlEncoded
     @POST("Api/data_tagihan_lunas")
@@ -36,7 +81,7 @@ interface ApiService {
         @Field("level_user") levelUser : Int,
         @Field("page") page : Int,
         @Field("size") size : Int
-    ): Maybe<Response<BillResponse>>
+    ): Maybe<Response<BillResponse<MutableList<PaidBill>>>>
 
     @FormUrlEncoded
     @POST("Api/data_tagihan_belum")
@@ -45,7 +90,7 @@ interface ApiService {
         @Field("level_user") levelUser : Int,
         @Field("page") page : Int,
         @Field("size") size : Int
-    ): Maybe<Response<BillResponse>>
+    ): Maybe<Response<BillResponse<MutableList<UnpaidBill>>>>
 
     @FormUrlEncoded
     @POST("Api/update_status")
@@ -64,7 +109,7 @@ interface ApiService {
         @Field("level_user") levelUser : Int,
         @Field("page") page : Int,
         @Field("size") size : Int
-    ): Maybe<Response<BillResponse>>
+    ): Maybe<Response<BillResponse<MutableList<PendingBill>>>>
 
     @FormUrlEncoded
     @POST("Api/data_wo_pending")
@@ -73,7 +118,7 @@ interface ApiService {
         @Field("level_user") levelUser : Int,
         @Field("page") page : Int,
         @Field("size") size : Int
-    ): Maybe<Response<BillResponse>>
+    ): Maybe<Response<BillResponse<List<PendingWorkOrder>>>>
 
     @FormUrlEncoded
     @POST("Api/data_wo_belum")
@@ -82,7 +127,7 @@ interface ApiService {
         @Field("level_user") levelUser : Int,
         @Field("page") page : Int,
         @Field("size") size : Int
-    ): Maybe<Response<BillResponse>>
+    ): Maybe<Response<BillResponse<List<UnpaidWorkOrder>>>>
 
     @FormUrlEncoded
     @POST("Api/jumlah_tagihan")

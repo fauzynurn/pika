@@ -12,4 +12,6 @@
     <color name="greySemiDark">#d6d6d6</color>
     <color name="greyTagihin2">#fafafa</color>
     <color name="greyLine">#dddddd</color>
+    <color name="grey">#8a8a8a</color>
+    <color name="lightGrey">#dedede</color>
 </resources>

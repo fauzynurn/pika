@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:windowBackground"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppTheme"
+            app:elevation="2dp">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlways">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="?attr/actionBarSize"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/toolbar_search"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="14dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/rounded_bg_search"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="9dp"
+                            android:src="@drawable/ic_search_black_24dp" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/search_box"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:background="@android:color/transparent"
+                                android:fontFamily="@font/roboto_medium"
+                                android:hint="Cari berdasarkan ID pelanggan.."
+                                android:imeOptions="actionSearch"
+                                android:maxLines="1"
+                                android:minHeight="40dp"
+                                android:minLines="1"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="25dp"
+                                android:singleLine="true"
+                                android:textColor="@color/greyTagihin"
+                                android:textColorHint="@color/greyTagihin"
+                                android:textSize="14sp" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:background="@color/white"
+                    app:contentInsetEnd="0dp"
+                    app:contentInsetStart="0dp"
+                    app:contentInsetStartWithNavigation="0dp"
+                    app:elevation="2dp"
+                    app:layout_collapseMode="pin"
+                    app:layout_scrollFlags="scroll|enterAlways|snap"
+                    app:popupTheme="@style/AppTheme"
+                    app:title="">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginRight="14dp">
+
+                        <TextView
+                            android:id="@+id/appbar_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="@font/roboto_medium"
+                            android:lineSpacingExtra="7sp"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="normal" />
+
+                    </RelativeLayout>
+
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <FrameLayout
+            android:id="@+id/bill_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
+        <!--            <LinearLayout-->
+        <!--                android:id="@+id/move_to_wo_container"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_alignParentBottom="true"-->
+        <!--                android:background="@color/colorPrimary"-->
+        <!--                android:orientation="horizontal"-->
+        <!--                android:visibility="gone">-->
+
+        <!--                <RelativeLayout-->
+        <!--                    android:layout_width="0dp"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_marginStart="10dp"-->
+        <!--                    android:layout_marginTop="5dp"-->
+        <!--                    android:layout_marginBottom="5dp"-->
+        <!--                    android:layout_weight="2">-->
+
+        <!--                    <com.google.android.material.button.MaterialButton-->
+        <!--                        android:id="@+id/move_to_wo_btn"-->
+        <!--                        style="@style/Widget.MaterialComponents.Button.TextButton"-->
+        <!--                        android:layout_width="wrap_content"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:text="Pindah ke WO (x)"-->
+        <!--                        android:textColor="@color/colorPrimary"-->
+        <!--                        android:textSize="13sp"-->
+        <!--                        app:backgroundTint="@color/white" />-->
+
+        <!--                </RelativeLayout>-->
+
+        <!--                <com.google.android.material.button.MaterialButton-->
+        <!--                    android:id="@+id/cancel_wo_btn"-->
+        <!--                    style="@style/Widget.MaterialComponents.Button.TextButton"-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_marginTop="5dp"-->
+        <!--                    android:layout_marginEnd="10dp"-->
+        <!--                    android:text="Batalkan"-->
+        <!--                    android:textColor="@color/white"-->
+        <!--                    android:textSize="13sp" />-->
+        <!--            </LinearLayout>-->
+        <LinearLayout
+            android:id="@+id/wo_controller_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:clipToPadding="false"
+            android:paddingBottom="20dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/add_wo_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TAMBAH KE WO"
+                app:layout_anchor="@id/cancel_wo_fab"
+                app:layout_anchorGravity="bottom|center_horizontal" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/cancel_wo_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:src="@android:drawable/ic_delete"
+                app:backgroundTint="@color/redTagihin"
+                app:fabSize="mini"
+                app:tint="@color/white" />
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

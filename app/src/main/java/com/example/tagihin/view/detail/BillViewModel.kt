@@ -5,9 +5,10 @@ import androidx.databinding.Bindable
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.tagihin.data.remote.model.Bill
+import com.example.tagihin.data.local.TagihinDb
 import com.example.tagihin.data.remote.model.BillStat
 import com.example.tagihin.data.remote.model.GeneralResponse
+import com.example.tagihin.data.remote.model.TempBill
 import com.example.tagihin.data.remote.repository.BillRepository
 import com.example.tagihin.data.remote.repository.HomeRepository
 import com.example.tagihin.utils.Consts
@@ -18,32 +19,48 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-class BillViewModel (val repo : BillRepository) : ViewModel(){
+class BillViewModel(val repo: BillRepository) : ViewModel() {
     var updateBill: MutableLiveData<Boolean> = MutableLiveData()
-    var error : MutableLiveData<String> = MutableLiveData()
+    var localUpdateBill: MutableLiveData<Boolean> = MutableLiveData()
+    var error: MutableLiveData<String> = MutableLiveData()
     //date should be in format DD/MM/YYYY
-    var status : MutableLiveData<String> = MutableLiveData("PENDING")
-    var dateChange : MutableLiveData<String> = MutableLiveData()
-    var note : String = ""
-    private var disposable : Disposable? = null
+    var status: MutableLiveData<String> = MutableLiveData("PENDING")
+    var dateChange: MutableLiveData<String> = MutableLiveData()
+    var note: String = ""
+    private var disposable: Disposable? = null
 
-    fun updateBill(billId : Int){
+    fun updateBill(
+        billId: Int,
+        name: String,
+        orderCode: String,
+        statusBefore : String
+    ) {
 //        Timber.i("DATE: %s",dateChange)
 //        Timber.i("status: %s",status)
 //        Timber.i("note: %s",note)
         //should be handled using rx with disabled button
-        val date = if(status.value!! == Consts.PAID){
+        val date = if (status.value!! == Consts.PAID) {
             DateUtils.getCurrentDate("yyyy-MM-dd")
-        }else{
+        } else {
             dateChange.value
         }
-        disposable = repo.updateBill(billId, status.value!! , date!! , note )
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                updateBill.postValue(it.body()?.status!!)
+        repo.updateBill(
+            statusBefore,
+            billId,
+            status.value!!,
+            date!!,
+            note,
+            status.value!!,
+            name,
+            orderCode,
+            {
+                updateBill.postValue(it)
+            },
+            {
+                error.postValue(it)
             }, {
-                error.postValue(it.message)
-            })
+                localUpdateBill.postValue(it)
+            }
+        )
     }
-
 }

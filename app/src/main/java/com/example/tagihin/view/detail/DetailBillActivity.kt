@@ -12,20 +12,23 @@ import androidx.lifecycle.Observer
 import com.example.tagihin.R
 import com.example.tagihin.base.BaseActivity
 import com.example.tagihin.base.BaseActivityNoViewModel
-import com.example.tagihin.data.remote.model.Bill
+import com.example.tagihin.data.remote.model.BaseBill
+import com.example.tagihin.data.remote.model.UnpaidBill
 import com.example.tagihin.databinding.ActivityDetailBillBinding
 import com.example.tagihin.databinding.ChangeStatusLayoutBinding
 import com.example.tagihin.utils.Consts
 
 class DetailBillActivity : BaseActivity<BillViewModel,ActivityDetailBillBinding>(BillViewModel::class){
     override fun getLayoutRes(): Int = R.layout.activity_detail_bill
+    lateinit var bill : BaseBill
+    var statusString = ""
     override fun showMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        val bill = intent.getSerializableExtra("bill") as Bill
-        val statusString = intent.getStringExtra("status")
+        bill = intent.getSerializableExtra("bill") as BaseBill
+        statusString = intent.getStringExtra("status")!!
         with(dataBinding){
             customerId.text = bill.idpel
             status.text = statusString
@@ -42,9 +45,15 @@ class DetailBillActivity : BaseActivity<BillViewModel,ActivityDetailBillBinding>
                 finish()
                 Toast.makeText(this, "Data tagihan berhasil diubah", Toast.LENGTH_SHORT).show()
         })
+        viewModel.localUpdateBill.observe(this, Observer {
+            hideDialog()
+            //setResult(Activity.RESULT_OK)
+            finish()
+            showToast("Permintaan perubahan data berhasil disimpan")
+        })
         doSpecificStyling(statusString)
         dataBinding.changeStatusBtn.setOnClickListener {
-            val btmSheet = ChangeStatusBottomSheet(bill.id, statusString)
+            val btmSheet = ChangeStatusBottomSheet(bill.id.toInt(), statusString)
             btmSheet.show(supportFragmentManager, btmSheet.tag)
         }
 
@@ -52,6 +61,14 @@ class DetailBillActivity : BaseActivity<BillViewModel,ActivityDetailBillBinding>
 
     fun setViewModel(binding : ChangeStatusLayoutBinding){
         binding.viewModel = viewModel
+    }
+
+    fun showToast(message: String){
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
+    }
+
+    fun saveResponse(id : Int){
+        viewModel.updateBill(id,bill.nama, bill.idpel, statusString)
     }
 
     fun doSpecificStyling(statusString: String){

@@ -41,10 +41,8 @@ abstract class BaseFragment<out V : ViewModel, D : ViewDataBinding>(clazz: KClas
     private var parentActivity: AppCompatActivity? = null
     private var mView: View? = null
 
-    lateinit var vm: ViewModel
-
     protected lateinit var dataBinding: D
-    val sharedviewModel : V by sharedViewModel(clazz)
+    val viewModel : V by sharedViewModel(clazz)
     val pref: PreferencesHelper by inject()
 
     var TAG = clazz::class.java.simpleName

@@ -12,6 +12,6 @@ class Consts {
         const val READ_TIMEOUT: Long = 100000
         const val WRITE_TIMEOUT: Long = 100000
 
-        val OPTIONS = listOf("PENDING", "LUNAS")
+        val OPTIONS = listOf(PENDING_ENG, PAID)
     }
 }

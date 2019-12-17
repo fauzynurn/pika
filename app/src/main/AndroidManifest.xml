@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tagihin">
-<uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name=".TagihinApp"
         android:allowBackup="true"
@@ -20,8 +22,19 @@
         <activity android:name=".view.home.HomeActivity" android:theme="@style/AppTheme"/>
         <activity android:name=".view.login.LoginActivity" android:theme="@style/AppTheme"/>
         <activity android:name=".view.detail.DetailBillActivity" android:theme="@style/AppTheme"/>
-        <activity android:name=".view.search.SearchActivity" android:theme="@style/AppTheme"/>
-        <activity android:name=".view.home.WorkOrderActivity" android:theme="@style/AppTheme"/>
+        <activity android:name=".view.workorder.WorkOrderActivity" android:theme="@style/AppTheme"/>
+        <activity android:name=".view.bill.paid.PaidActivity" android:theme="@style/AppTheme"/>
+        <activity android:name=".view.bill.unpaid.UnpaidActivity" android:theme="@style/AppTheme"/>
+        <activity android:name=".view.bill.pending.PendingActivity" android:theme="@style/AppTheme"/>
+        <activity android:name=".view.bill.savedbill.SavedBillActivity" android:theme="@style/AppTheme"/>
+        <activity android:name=".view.settings.SettingActivity" android:theme="@style/AppTheme"/>
+        <receiver
+            android:enabled="true"
+            android:name=".utils.receiver.ConnectivityChangeReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:windowBackground"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppTheme"
+            app:elevation="2dp">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_main"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="@color/white"
+                app:contentInsetEnd="0dp"
+                app:contentInsetStart="0dp"
+                app:contentInsetStartWithNavigation="0dp"
+                app:elevation="2dp"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:popupTheme="@style/AppTheme"
+                app:title="">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp">
+
+                    <TextView
+                        android:id="@+id/appbar_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/roboto_medium"
+                        android:lineSpacingExtra="7sp"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="normal" />
+
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?android:attr/actionBarSize"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Reset data"
+                android:textColor="@color/black"
+                android:textSize="21sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_marginTop="10dp"
+                app:rippleColor="@color/lightGrey"
+                android:id="@+id/reset_bill_container"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Reset data tagihan"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Reset semua data tagihan termasuk data tagihan lunas, tertunda dan belum dibayar"
+                        android:textColor="@color/grey"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_marginTop="10dp"
+                app:cardElevation="0dp"
+                app:rippleColor="@color/lightGrey"
+                android:id="@+id/reset_wo_container"
+                app:cardBackgroundColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Reset data Work Order"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Reset semua data tagihan termasuk data work order tertunda dan belum dibayar"
+                        android:textColor="@color/grey"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

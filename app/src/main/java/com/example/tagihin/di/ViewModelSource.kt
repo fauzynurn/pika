@@ -1,15 +1,27 @@
 package com.example.tagihin.di
 
+import com.example.tagihin.view.bill.paid.PaidViewModel
+import com.example.tagihin.view.bill.pending.PendingViewModel
+import com.example.tagihin.view.bill.unpaid.UnpaidViewModel
 import com.example.tagihin.view.detail.BillViewModel
 import com.example.tagihin.view.home.HomeViewModel
 import com.example.tagihin.view.login.LoginViewModel
-import com.example.tagihin.view.search.SearchViewModel
+import com.example.tagihin.view.bill.savedbill.SavedBillViewModel
+import com.example.tagihin.view.settings.SettingViewModel
+import com.example.tagihin.view.workorder.pending.PendingWorkOrderViewModel
+import com.example.tagihin.view.workorder.unpaid.UnpaidWorkOrderViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel { LoginViewModel(get() ) }
+    viewModel { PaidViewModel(get() ) }
+    viewModel { PendingViewModel(get() ) }
+    viewModel { UnpaidViewModel(get() ) }
+    viewModel { UnpaidWorkOrderViewModel(get() ) }
+    viewModel { PendingWorkOrderViewModel(get() ) }
+    viewModel { SavedBillViewModel(get() ) }
     viewModel { HomeViewModel(get()) }
-    viewModel { SearchViewModel(get()) }
     viewModel{ BillViewModel(get()) }
+    viewModel { SettingViewModel(get()) }
 }
