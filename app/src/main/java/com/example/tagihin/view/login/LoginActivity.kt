@@ -34,6 +34,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
                 pref.setLoginStatus(true)
                 pref.setName(it.data?.nama!!)
                 pref.setUsername(viewModel.username)
+                pref.setPrivilege(it.data?.level_user!!)
                 if(it.data?.foto != null) pref.setProfilePicUrl(it.data?.foto!!)
                 startActivity(Intent(this, HomeActivity::class.java))
                 finish()

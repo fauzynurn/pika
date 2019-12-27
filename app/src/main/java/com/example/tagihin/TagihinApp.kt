@@ -32,6 +32,7 @@ class TagihinApp : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
+        setInstance(this)
         startKoin {
             androidContext(this@TagihinApp)
             modules(

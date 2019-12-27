@@ -21,7 +21,7 @@
 //    private var billAdapter: BillAdapter? = null
 //    private var list: MutableList<Bill> = mutableListOf()
 //    private var textChangeListener : Disposable? = null
-//    override fun getLayoutRes(): Int = R.layout.activity_search
+//    override fun getLayoutRes(): Int = R.layout.activity_search_dil
 //
 //    override fun showMessage(message: String) {
 //        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()

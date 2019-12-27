@@ -13,7 +13,7 @@ class HomeRepository(
 ) {
     fun getBillStat(): Maybe<Response<BillStatResponse>> {
         return apiService.getBillStat(
-            pref.getUsername()!!, 3
+            pref.getUsername()!!, pref.getPrivilege()
         )
     }
 }

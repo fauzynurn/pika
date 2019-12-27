@@ -96,7 +96,7 @@ class UnpaidActivity : BaseActivity<UnpaidViewModel, ActivityBillBinding>(Unpaid
         setSupportActionBar(dataBinding.toolbarMain)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp)
-        dataBinding.appbarTitle.text = "Data Tagihan Belum Lunas"
+        dataBinding.appbarTitle.text = "Data Tagihan Belum Bayar"
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

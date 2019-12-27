@@ -14,6 +14,7 @@ import com.example.tagihin.view.bill.paid.PaidActivity
 import com.example.tagihin.view.bill.pending.PendingActivity
 import com.example.tagihin.view.bill.unpaid.UnpaidActivity
 import com.example.tagihin.view.login.LoginActivity
+import com.example.tagihin.view.searchdil.SearchDilActivity
 import com.example.tagihin.view.settings.SettingActivity
 import com.example.tagihin.view.workorder.WorkOrderActivity
 import java.util.*
@@ -59,6 +60,11 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityMainBinding>(HomeViewMo
                 drawerContainer.closeDrawers()
             }
 
+            searchDilBtn.setOnClickListener {
+                startActivity(
+                    Intent(this@HomeActivity, SearchDilActivity::class.java)
+                )
+            }
             paidListBtn.setOnClickListener {
                 startActivity(
                     Intent(this@HomeActivity,PaidActivity::class.java)

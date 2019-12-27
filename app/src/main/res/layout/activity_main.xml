@@ -366,6 +366,38 @@
                             </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
 
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/search_dil_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            app:cardBackgroundColor="@color/colorPrimary"
+                            app:cardCornerRadius="5dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:orientation="horizontal"
+                                android:padding="12dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:fontFamily="@font/roboto_bold"
+                                    android:text="Cari DIL"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
+
+                                <ImageView
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:layout_gravity="end|center_vertical"
+                                    android:src="@drawable/arrow_right_white" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>

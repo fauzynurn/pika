@@ -16,7 +16,8 @@ buildscript {
                 glide               : 'com.github.bumptech.glide:glide:4.10.0',
                 circleImageView     : 'de.hdodenhof:circleimageview:3.0.1',
                 viewPager2          : 'androidx.viewpager2:viewpager2:1.0.0',
-                pieChart : 'com.github.mancj:SlimChart:0.1.2'
+                pieChart : 'com.github.mancj:SlimChart:0.1.2',
+                shimmerFacebook : 'com.facebook.shimmer:shimmer:0.5.0'
         ]
         database = [
                 room = "androidx.room:room-runtime:$room_version"
@@ -34,7 +35,10 @@ buildscript {
                 core     : "org.koin:koin-android:2.0.1",
                 viewModel: "org.koin:koin-androidx-viewmodel:2.0.1"
         ]
-
+        utils = [
+                dexter : 'com.karumi:dexter:6.0.1',
+                ucrop : 'com.github.yalantis:ucrop:2.2.4'
+        ]
         rx = [
                 kotlin   : "io.reactivex.rxjava2:rxkotlin:2.3.0",
                 android  : "io.reactivex.rxjava2:rxandroid:2.1.1",

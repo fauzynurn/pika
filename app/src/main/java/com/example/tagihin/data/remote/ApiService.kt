@@ -2,6 +2,8 @@ package com.example.tagihin.data.remote
 
 import com.example.tagihin.data.remote.model.*
 import io.reactivex.Maybe
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.*
@@ -54,6 +56,41 @@ interface ApiService {
         @Field("size") size : Int
     ): Maybe<Response<BillResponse<List<UnpaidBill>>>>
 
+    @Multipart
+    @POST("Api/upload_konfirmasi")
+    fun uploadConfirmation(
+        @Part("username") username : RequestBody,
+        @Part("level_user") levelUser : RequestBody,
+        @Part("id") id : RequestBody,
+        @Part("idpel") idpel : RequestBody,
+        @Part("nama") nama : RequestBody,
+        @Part("alamat") alamat : RequestBody,
+        @Part("tarif") tarif : RequestBody,
+        @Part("daya") daya : RequestBody,
+        @Part("tanggal") tanggal : RequestBody,
+        @Part("meter_rusak") meterRusak : RequestBody,
+        @Part("meter_siaga") meterSiaga : RequestBody,
+        @Part("pasang_siaga") pasangSiaga : RequestBody,
+        @Part("no_hp") noHp : RequestBody,
+        @Part("kor_x") korX : RequestBody,
+        @Part("kor_y") korY : RequestBody,
+        @Part foto_siaga: MultipartBody.Part,
+        @Part foto_rusak: MultipartBody.Part,
+        @Part foto_bangunan: MultipartBody.Part
+    ): Maybe<Response<GeneralResponse>>
+
+    @FormUrlEncoded
+    @POST("Api/upload_validasi")
+    fun validateDil(
+        @Field("username") username : String,
+        @Field("level_user") levelUser : Int,
+        @Field("id") id : String,
+        @Field("tanggal_validasi") tanggalValidasi: String,
+        @Field("cabut_siaga") cabutSiaga : String,
+        @Field("jumlah_kwh") jumlahKwh : String,
+        @Field("tagihan") tagihan : String,
+        @Field("tarif") tarif : String
+    ) : Maybe<Response<GeneralResponse>>
     @FormUrlEncoded
     @POST("Api/searching")
     fun searchPending(
@@ -63,6 +100,14 @@ interface ApiService {
         @Field("page") page : Int,
         @Field("size") size : Int
     ): Maybe<Response<BillResponse<List<PendingBill>>>>
+
+    @FormUrlEncoded
+    @POST("Api/cari_dil")
+    fun searchDil(
+        @Field("username") username : String,
+        @Field("query") query : String,
+        @Field("level_user") levelUser : Int
+    ): Maybe<Response<DilResponse>>
 
     @FormUrlEncoded
     @POST("Api/searching")

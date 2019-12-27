@@ -56,7 +56,7 @@ class PaidRepository (val apiService : ApiService,
     private fun refresh(): LiveData<NetworkState> {
         val networkState = MutableLiveData<NetworkState>()
         networkState.value = NetworkState.LOADING
-        apiService.getPaidBill(pref.getUsername()!!,3,0,10)
+        apiService.getPaidBill(pref.getUsername()!!,pref.getPrivilege(),0,10)
             .subscribeOn(Schedulers.io())
             .subscribe({
                 ioExecutor.execute {

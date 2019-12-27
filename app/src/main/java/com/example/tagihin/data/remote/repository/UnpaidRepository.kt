@@ -49,7 +49,7 @@ class UnpaidRepository (val apiService : ApiService,
 
     fun moveToWO(list : HashMap<String,Int>) : Maybe<Response<GeneralResponse>> {
         return apiService.moveToWO(
-            pref.getUsername()!!,3,list
+            pref.getUsername()!!,pref.getPrivilege(),list
         )
     }
     /**
@@ -64,7 +64,7 @@ class UnpaidRepository (val apiService : ApiService,
     private fun refresh(): LiveData<NetworkState> {
         val networkState = MutableLiveData<NetworkState>()
         networkState.value = NetworkState.LOADING
-        apiService.getUnpaidBill(pref.getUsername()!!,3,0,10)
+        apiService.getUnpaidBill(pref.getUsername()!!,pref.getPrivilege(),0,10)
             .subscribeOn(Schedulers.io())
             .subscribe({
                 ioExecutor.execute {

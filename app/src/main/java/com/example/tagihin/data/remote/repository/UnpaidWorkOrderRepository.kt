@@ -54,7 +54,7 @@ class UnpaidWorkOrderRepository (val apiService : ApiService,
     private fun refresh(): LiveData<NetworkState> {
         val networkState = MutableLiveData<NetworkState>()
         networkState.value = NetworkState.LOADING
-        apiService.getUnpaidWorkOrderBill(pref.getUsername()!!,3,0,10)
+        apiService.getUnpaidWorkOrderBill(pref.getUsername()!!,pref.getPrivilege(),0,10)
             .subscribeOn(Schedulers.io())
             .subscribe({
                 ioExecutor.execute {

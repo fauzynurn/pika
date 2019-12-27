@@ -19,7 +19,7 @@ class SettingRepository(
     @SuppressLint("CheckResult")
     fun resetWo(callback: (Boolean) -> Unit) {
         apiService.resetWo(
-            pref.getUsername()!!, 3
+            pref.getUsername()!!, pref.getPrivilege()
         )
             .subscribeOn(Schedulers.io())
             .subscribe({
@@ -32,7 +32,7 @@ class SettingRepository(
     @SuppressLint("CheckResult")
     fun resetBill(callback: (Boolean) -> Unit) {
         apiService.resetBill(
-            pref.getUsername()!!, 3
+            pref.getUsername()!!, pref.getPrivilege()
         )
             .subscribeOn(Schedulers.io())
             .subscribe({

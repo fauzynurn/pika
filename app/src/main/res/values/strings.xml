@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Pika</string>
+    <string name="pick_image_intent">PICK_IMAGE_INTENT</string>
 </resources>

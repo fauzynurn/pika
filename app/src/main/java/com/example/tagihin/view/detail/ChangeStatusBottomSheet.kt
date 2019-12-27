@@ -1,6 +1,5 @@
 package com.example.tagihin.view.detail
 
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Bundle
@@ -9,17 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.tagihin.databinding.ChangeStatusLayoutBinding
-import com.example.tagihin.utils.ConnectivityManager
-import com.example.tagihin.utils.Consts
 import com.example.tagihin.utils.Consts.Companion.OPTIONS
-import com.example.tagihin.widget.BottomSheet
+import com.example.tagihin.widget.RoundedBottomSheet
 import java.util.*
 
 
-class ChangeStatusBottomSheet(val billId: Int, var statusString: String) : BottomSheet(),
+class ChangeStatusBottomSheet(val billId: Int, var statusString: String) : RoundedBottomSheet(),
     OnDateSetListener {
     var binding: ChangeStatusLayoutBinding? = null
     lateinit var datePickerDialog: DatePickerDialog

@@ -9,5 +9,6 @@ class LoginResponse(
 data class Login(
     var id : Int,
     var nama : String,
-    var foto : String
+    var foto : String,
+    var level_user : Int
 )

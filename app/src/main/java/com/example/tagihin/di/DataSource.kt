@@ -18,6 +18,7 @@ val repositoryModule = module {
     single { HomeRepository(get(), get())}
     single { BillRepository(Executors.newSingleThreadExecutor(),androidContext(), get(), get(), get()) }
     single { LoginRepository(get()) }
+    single {SearchDilRepository(Executors.newSingleThreadExecutor(),get(), get(),get())}
     single {SavedBillRepository(get(),get(),Executors.newSingleThreadExecutor(), get())}
     single{ TagihinDb.create(androidContext(), false)}
     single { SettingRepository(Executors.newSingleThreadExecutor(),get(), get(), get())}

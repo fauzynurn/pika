@@ -58,7 +58,7 @@ class PendingRepository (val apiService : ApiService,
     private fun refresh(): LiveData<NetworkState> {
         val networkState = MutableLiveData<NetworkState>()
         networkState.value = NetworkState.LOADING
-        apiService.getPendingBill(pref.getUsername()!!,3,0,10)
+        apiService.getPendingBill(pref.getUsername()!!,pref.getPrivilege(),0,10)
             .subscribeOn(Schedulers.io())
             .subscribe({
                 ioExecutor.execute {
@@ -77,7 +77,7 @@ class PendingRepository (val apiService : ApiService,
 
     fun moveToWO(list : HashMap<String,Int>) : Maybe<Response<GeneralResponse>> {
         return apiService.moveToWO(
-            pref.getUsername()!!,3,list
+            pref.getUsername()!!,pref.getPrivilege(),list
         )
     }
 

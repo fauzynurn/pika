@@ -32,7 +32,7 @@ class PendingWorkOrderBoundaryCallback(
     override fun onZeroItemsLoaded() {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.INITIAL) {
             helper ->
-            webservice.getPendingWorkOrderBill(pref.getUsername()!!,3,0,10)
+            webservice.getPendingWorkOrderBill(pref.getUsername()!!,pref.getPrivilege(),0,10)
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     insertItemsIntoDb(it.body()?.data?.toMutableList(),helper)
@@ -50,7 +50,7 @@ class PendingWorkOrderBoundaryCallback(
     @MainThread
     override fun onItemAtEndLoaded(itemAtEnd: PendingWorkOrder) {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) {
-            helper -> webservice.getPendingWorkOrderBill(pref.getUsername()!!,3,page,10)
+            helper -> webservice.getPendingWorkOrderBill(pref.getUsername()!!,pref.getPrivilege(),page,10)
             .subscribeOn(Schedulers.io())
             .subscribe({
                 insertItemsIntoDb(it.body()?.data?.toMutableList(),helper)

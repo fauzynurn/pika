@@ -48,6 +48,7 @@ dependencies {
     implementation core.values()
     implementation rx.values()
     implementation timber.values()
+    implementation utils.values()
     implementation retrofit.values()
     implementation http.values()
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'

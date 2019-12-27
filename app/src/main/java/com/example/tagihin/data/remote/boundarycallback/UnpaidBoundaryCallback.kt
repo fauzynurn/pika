@@ -33,7 +33,7 @@ class UnpaidBoundaryCallback(
     override fun onZeroItemsLoaded() {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.INITIAL) {
             helper ->
-            webservice.getUnpaidBill(pref.getUsername()!!,3,0,10)
+            webservice.getUnpaidBill(pref.getUsername()!!,pref.getPrivilege(),0,10)
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     insertItemsIntoDb(it.body()?.data,helper)
@@ -52,7 +52,7 @@ class UnpaidBoundaryCallback(
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) {
             helper ->
             val index = if(itemAtEnd.index != null) itemAtEnd.index!! +1 else -1
-            webservice.getUnpaidBill(pref.getUsername()!!,3,index,10)
+            webservice.getUnpaidBill(pref.getUsername()!!,pref.getPrivilege(),index,10)
             .subscribeOn(Schedulers.io())
             .subscribe({
                 insertItemsIntoDb(it.body()?.data,helper)

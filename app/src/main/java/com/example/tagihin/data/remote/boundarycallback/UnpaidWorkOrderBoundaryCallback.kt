@@ -32,7 +32,7 @@ class UnpaidWorkOrderBoundaryCallback(
     override fun onZeroItemsLoaded() {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.INITIAL) {
             helper ->
-            webservice.getUnpaidWorkOrderBill(pref.getUsername()!!,3,0,10)
+            webservice.getUnpaidWorkOrderBill(pref.getUsername()!!,pref.getPrivilege(),0,10)
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     insertItemsIntoDb(it.body()?.data?.toMutableList(),helper)
@@ -50,7 +50,7 @@ class UnpaidWorkOrderBoundaryCallback(
     @MainThread
     override fun onItemAtEndLoaded(itemAtEnd: UnpaidWorkOrder) {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) {
-            helper -> webservice.getUnpaidWorkOrderBill(pref.getUsername()!!,3,page,10)
+            helper -> webservice.getUnpaidWorkOrderBill(pref.getUsername()!!,pref.getPrivilege(),page,10)
             .subscribeOn(Schedulers.io())
             .subscribe({
                 insertItemsIntoDb(it.body()?.data?.toMutableList(),helper)
