@@ -14,4 +14,5 @@
     <color name="greyLine">#dddddd</color>
     <color name="grey">#8a8a8a</color>
     <color name="lightGrey">#dedede</color>
+    <color name="fadeBlue">#B5E6FF</color>
 </resources>

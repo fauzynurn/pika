@@ -6,8 +6,11 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
+import android.location.Location
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
@@ -19,6 +22,7 @@ import android.widget.DatePicker
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -32,6 +36,8 @@ import com.example.tagihin.utils.Consts
 import com.example.tagihin.utils.Consts.Companion.REQUEST_IMAGE
 import com.example.tagihin.utils.ImagePickerActivity
 import com.example.tagihin.widget.BottomSheet
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.karumi.dexter.Dexter
@@ -45,13 +51,13 @@ import java.io.IOException
 import java.util.*
 
 
-class ConfirmBottomSheet(val dilItem : DilItemResponse) : BottomSheet(),
+class ConfirmBottomSheet(val dilItem: DilItemResponse) : BottomSheet(),
     OnDateSetListener {
     var binding: ConfirmDilBtmSheetLayoutBinding? = null
     lateinit var datePickerDialog: DatePickerDialog
     lateinit var mActivity: SearchDilActivity
-    var observer : Observer<Boolean>? = null
-    val viewModel : SearchDilViewModel by sharedViewModel()
+    var observer: Observer<Boolean>? = null
+    val viewModel: SearchDilViewModel by sharedViewModel()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -143,6 +149,7 @@ class ConfirmBottomSheet(val dilItem : DilItemResponse) : BottomSheet(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mActivity = activity as SearchDilActivity
         observer = Observer {
             mActivity.hideDialog()
             if (it) {
@@ -152,9 +159,8 @@ class ConfirmBottomSheet(val dilItem : DilItemResponse) : BottomSheet(),
                 mActivity.showMessage("Data gagal diperbaharui")
             }
         }
-        mActivity = activity as SearchDilActivity
         binding?.viewModel = viewModel
-        //viewModel.dilItem.value = dilItem
+        binding?.lifecycleOwner = this
         dialog?.setOnShowListener { dialog ->
             val d = dialog as BottomSheetDialog
             val bottomSheet =
@@ -164,25 +170,22 @@ class ConfirmBottomSheet(val dilItem : DilItemResponse) : BottomSheet(),
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         }
         binding?.confirmBtn?.setOnClickListener {
-//            dilItemRequest.apply {
-//                this?.meter_rusak = binding?.nomorMeterRusak?.text.toString()
-//                this?.meter_siaga = binding?.nomorMeterSiaga?.text.toString()
-//                this?.pasang_siaga = binding?.standMeterPsgSiaga?.text.toString()
-//                this?.kor_x = binding?.koorX?.text.toString()
-//                this?.kor_y = binding?.koorY?.text.toString()
-//                this?.no_hp = binding?.noHp?.text.toString()
-//            }
             viewModel.sendConfirmationForm()
             mActivity.showDialog()
         }
         viewModel.updateSuccess.observe(this, observer!!)
-
-//        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        viewModel.latLong.observe(this, Observer {
+            if(it.first != 0.0 && it.second != 0.0 ){
+                viewModel.latLongFinal.value = Pair<Double,Double>(it.first, it.second)
+            }else{
+                getLatLong()
+            }
+        })
         binding?.siagaPhoto?.setOnClickListener {
-            checkPermission("Upload foto siaga", Consts.SIAGA)
+            checkPermission("Upload foto KwH meter siaga", Consts.SIAGA)
         }
         binding?.rusakPhoto?.setOnClickListener {
-            checkPermission("Upload foto rusak", Consts.RUSAK)
+            checkPermission("Upload foto KwH meter rusak", Consts.RUSAK)
         }
         binding?.bangunanPhoto?.setOnClickListener {
             checkPermission("Upload foto bangunan", Consts.BANGUNAN)
@@ -318,5 +321,35 @@ class ConfirmBottomSheet(val dilItem : DilItemResponse) : BottomSheet(),
         viewModel.dilItemRequest.value?.tanggal =
             String.format("%d-%d-%d", year, month + 1, day)
         binding?.date?.text = viewModel.dilItemRequest.value?.tanggal
+    }
+
+    fun getLatLong(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(
+                    context!!,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(
+                    context!!,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    mActivity,
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ),
+                    123
+                )
+            } else {
+                val mFusedLocation = LocationServices.getFusedLocationProviderClient(mActivity)
+                mFusedLocation.lastLocation.addOnSuccessListener(
+                    mActivity
+                ) { location ->
+                    viewModel.latLongFinal.postValue(Pair<Double,Double>(location?.latitude!!,location.longitude))
+                }
+            }
+        }
     }
 }

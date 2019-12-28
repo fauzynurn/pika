@@ -15,14 +15,14 @@ import com.example.tagihin.utils.SingleLiveEvent
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-class SearchDilViewModel (val repo : SearchDilRepository) : ViewModel() {
+class SearchDilViewModel(val repo: SearchDilRepository) : ViewModel() {
     val error = MutableLiveData<String>()
     var dilItem = MutableLiveData<DilItemResponse?>(DilItemResponse())
     var query = MutableLiveData<String>()
     var loadingState = MutableLiveData<Boolean>(false)
     var updateSuccess = SingleLiveEvent<Boolean>()
-    lateinit var dilValidate : DilItemValidationRequest
-    var dilItemRequest : LiveData<DilItemRequest?> = Transformations.map(dilItem) {
+    lateinit var dilValidate: DilItemValidationRequest
+    var dilItemRequest: LiveData<DilItemRequest?> = Transformations.map(dilItem) {
         DilItemRequest(
             it?.id.throwEmptyStringIfNull(),
             it?.idpel.throwEmptyStringIfNull(),
@@ -40,12 +40,20 @@ class SearchDilViewModel (val repo : SearchDilRepository) : ViewModel() {
             it?.tanggal.throwEmptyStringIfNull(),
             it?.meter_rusak.throwEmptyStringIfNull(),
             it?.meter_siaga.throwEmptyStringIfNull(),
-            it?.pasang_siaga.throwEmptyStringIfNull()
-            )
+            it?.pasang_siaga.throwEmptyStringIfNull(),
+            it?.x_upload.throwZeroIfNull(),
+            it?.y_upload.throwZeroIfNull()
+        )
     }
+    var latLongFinal = MutableLiveData<Pair<Double, Double>>()
+    var latLong: LiveData<Pair<Double, Double>> =
+        Transformations.map(dilItemRequest) {
+            Pair(it?.x_upload?.toDouble()!!, it.y_upload.toDouble())
+        }
+
 
     @SuppressLint("CheckResult")
-    fun searchDil(queryy : String){
+    fun searchDil(queryy: String) {
         repo.searchDil(queryy)
             .subscribeOn(Schedulers.io())
             .subscribe({
@@ -58,7 +66,7 @@ class SearchDilViewModel (val repo : SearchDilRepository) : ViewModel() {
     }
 
     @SuppressLint("CheckResult")
-    fun sendConfirmationForm(){
+    fun sendConfirmationForm() {
         repo.uploadConfirmation(
             dilItemRequest.value?.id.throwEmptyStringIfNull(),
             dilItemRequest.value?.idpel.throwEmptyStringIfNull(),
@@ -71,8 +79,8 @@ class SearchDilViewModel (val repo : SearchDilRepository) : ViewModel() {
             dilItemRequest.value?.meter_siaga.throwEmptyStringIfNull(),
             dilItemRequest.value?.pasang_siaga.throwEmptyStringIfNull(),
             dilItemRequest.value?.no_hp.throwEmptyStringIfNull(),
-            dilItemRequest.value?.kor_x.throwEmptyStringIfNull(),
-            dilItemRequest.value?.kor_y.throwEmptyStringIfNull(),
+            latLongFinal.value?.first.toString(),
+            latLongFinal.value?.second.toString(),
             dilItemRequest.value?.foto_siaga!!,
             dilItemRequest.value?.foto_rusak!!,
             dilItemRequest.value?.foto_bangunan!!
@@ -85,8 +93,12 @@ class SearchDilViewModel (val repo : SearchDilRepository) : ViewModel() {
             })
     }
 
-    fun String?.throwEmptyStringIfNull() : String{
-        return if(this != "" && this != null) this else ""
+    fun String?.throwEmptyStringIfNull(): String {
+        return if (this != "" && this != null) this else ""
+    }
+
+    fun String?.throwZeroIfNull(): String {
+        return if (this != "" && this != null) this else "0"
     }
 
     @SuppressLint("CheckResult")

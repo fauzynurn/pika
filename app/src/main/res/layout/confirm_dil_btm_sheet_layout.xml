@@ -4,10 +4,14 @@
 
     <data>
 
+        <import type="android.text.TextUtils" />
+
         <import type="android.view.View" />
-<variable
-    name="viewModel"
-    type="com.example.tagihin.view.searchdil.SearchDilViewModel" />
+
+        <variable
+            name="viewModel"
+            type="com.example.tagihin.view.searchdil.SearchDilViewModel" />
+
         <variable
             name="dilItem"
             type="com.example.tagihin.data.remote.model.DilItemRequest" />
@@ -53,6 +57,7 @@
                                 android:id="@+id/nomor_meter_rusak"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:enabled="@{TextUtils.isEmpty(viewModel.dilItemRequest.meter_rusak.toString())}"
                                 android:fontFamily="@font/roboto_regular"
                                 android:hint="Nomor meter rusak"
                                 android:longClickable="false"
@@ -88,6 +93,7 @@
                                 android:id="@+id/nomor_meter_siaga"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:enabled="@{TextUtils.isEmpty(viewModel.dilItemRequest.meter_siaga.toString())}"
                                 android:fontFamily="@font/roboto_regular"
                                 android:hint="Nomor meter siaga"
                                 android:longClickable="false"
@@ -123,12 +129,13 @@
                                 android:id="@+id/koor_x"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:enabled="false"
                                 android:fontFamily="@font/roboto_regular"
                                 android:hint="Koordinat X"
                                 android:longClickable="false"
                                 android:paddingStart="4dp"
                                 android:singleLine="true"
-                                android:text="@={viewModel.dilItemRequest.kor_x}"
+                                android:text="@{viewModel.latLongFinal.first.toString()}"
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -158,12 +165,13 @@
                                 android:id="@+id/koor_y"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:enabled="false"
                                 android:fontFamily="@font/roboto_regular"
                                 android:hint="Koordinat Y"
                                 android:longClickable="false"
                                 android:paddingStart="4dp"
                                 android:singleLine="true"
-                                android:text="@={viewModel.dilItemRequest.kor_y}"
+                                android:text="@{viewModel.latLongFinal.second.toString())}"
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -193,6 +201,7 @@
                                 android:id="@+id/stand_meter_psg_siaga"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:enabled="@{TextUtils.isEmpty(viewModel.dilItemRequest.pasang_siaga.toString())}"
                                 android:fontFamily="@font/roboto_regular"
                                 android:hint="Stand meter pasang siaga"
                                 android:longClickable="false"
@@ -228,6 +237,7 @@
                                 android:id="@+id/no_hp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:enabled="@{TextUtils.isEmpty(viewModel.dilItemRequest.no_hp.toString())}"
                                 android:fontFamily="@font/roboto_regular"
                                 android:hint="Nomor telepon"
                                 android:longClickable="false"
@@ -267,6 +277,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
                             android:layout_marginBottom="15dp"
+                            android:clickable="@{viewModel.dilItemRequest.tanggal != `` ? false : true}"
                             android:orientation="horizontal">
 
                             <TextView
@@ -313,6 +324,7 @@
 
                                     <ImageView
                                         android:id="@+id/siaga_image"
+                                        imageUrl="@{viewModel.dilItem.foto_siaga}"
                                         android:layout_width="130dp"
                                         android:layout_height="125dp"
                                         android:src="#E6F2FE" />
@@ -323,7 +335,8 @@
                                         android:layout_height="wrap_content"
                                         android:layout_margin="22dp"
                                         android:gravity="center_horizontal"
-                                        android:orientation="vertical">
+                                        android:orientation="vertical"
+                                        android:visibility="@{TextUtils.isEmpty(viewModel.dilItem.foto_siaga.toString()) ? View.VISIBLE : View.GONE}">
 
                                         <ImageView
                                             android:id="@+id/siaga_photo"
@@ -358,6 +371,7 @@
 
                                     <ImageView
                                         android:id="@+id/rusak_image"
+                                        imageUrl="@{viewModel.dilItem.foto_rusak}"
                                         android:layout_width="130dp"
                                         android:layout_height="125dp"
                                         android:src="#E6F2FE" />
@@ -368,7 +382,8 @@
                                         android:layout_height="wrap_content"
                                         android:layout_margin="22dp"
                                         android:gravity="center_horizontal"
-                                        android:orientation="vertical">
+                                        android:orientation="vertical"
+                                        android:visibility="@{TextUtils.isEmpty(viewModel.dilItem.foto_rusak.toString()) ? View.VISIBLE : View.GONE}">
 
                                         <ImageView
                                             android:id="@+id/rusak_photo"
@@ -403,6 +418,7 @@
 
                                     <ImageView
                                         android:id="@+id/bangunan_image"
+                                        imageUrl="@{viewModel.dilItem.foto_bangunan}"
                                         android:layout_width="130dp"
                                         android:layout_height="125dp"
                                         android:src="#E6F2FE" />
@@ -413,7 +429,8 @@
                                         android:layout_height="wrap_content"
                                         android:layout_margin="22dp"
                                         android:gravity="center_horizontal"
-                                        android:orientation="vertical">
+                                        android:orientation="vertical"
+                                        android:visibility="@{TextUtils.isEmpty(viewModel.dilItem.foto_bangunan.toString()) ? View.VISIBLE : View.GONE}">
 
                                         <ImageView
                                             android:id="@+id/bangunan_photo"
@@ -441,6 +458,7 @@
                         android:layout_height="50dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="20dp"
+                        android:enabled="@{TextUtils.isEmpty(viewModel.dilItemRequest.meter_rusak.toString())}"
                         android:layout_marginBottom="10dp"
                         android:fontFamily="@font/roboto_bold"
                         android:text="Konfirmasi"
