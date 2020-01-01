@@ -42,6 +42,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.io.IOException
+import java.text.DecimalFormat
 import java.util.*
 
 
@@ -50,6 +51,7 @@ class ValidateBottomSheet : BottomSheet(),
     var binding: ValidateDilBtmSheetLayoutBinding? = null
     lateinit var datePickerDialog: DatePickerDialog
     lateinit var mActivity: SearchDilActivity
+    lateinit var formatter : DecimalFormat
     var observer : Observer<Boolean>? = null
     val viewModel : SearchDilViewModel by sharedViewModel()
     override fun onCreateView(
@@ -72,8 +74,41 @@ class ValidateBottomSheet : BottomSheet(),
                 mActivity.showMessage("Data gagal diperbaharui")
             }
         }
+
         mActivity = activity as SearchDilActivity
+        binding?.lifecycleOwner = this
         binding?.viewModel = viewModel
+        //binding?.formatter = DecimalFormat("#,###")
+        viewModel.cabutSiaga.observe(this, Observer {
+            if(it != null && it.isNotEmpty()) {
+                //do it in immutable way
+                val dilValidate = viewModel.dilValidate.value
+                dilValidate.apply {
+                    this?.jumlah_kwh = viewModel.calculateKwhUsed(
+                        it.toInt(),
+                        viewModel.dilItem.value?.pasang_siaga!!
+                    )
+                    this?.tagihan =
+                        viewModel.calculateBill(this?.jumlah_kwh!!, viewModel.cost.value?.toInt()!!)
+                }
+                viewModel.dilValidate.value = dilValidate
+            }
+        })
+        viewModel.cost.observe(this,Observer {
+            if(it != null) {
+                //do it in immutable way
+                val dilValidate = viewModel.dilValidate.value
+                dilValidate.apply {
+                    this?.jumlah_kwh = viewModel.calculateKwhUsed(
+                        viewModel.cabutSiaga.value?.toInt()!!,
+                        viewModel.dilItem.value?.pasang_siaga!!
+                    )
+                    this?.tagihan =
+                        viewModel.calculateBill(this?.jumlah_kwh!!, it.toInt())
+                }
+                viewModel.dilValidate.value = dilValidate
+            }
+        })
         //viewModel.dilItem.value = dilItem
         dialog?.setOnShowListener { dialog ->
             val d = dialog as BottomSheetDialog
@@ -113,7 +148,7 @@ class ValidateBottomSheet : BottomSheet(),
 
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {
         binding?.validateBtn?.isEnabled = true
-        viewModel.dilValidate.tanggal_validasi =
+        viewModel.dilValidate.value?.tanggal_validasi =
             String.format("%d-%d-%d", year, month + 1, day)
         //binding?.date?.text = viewModel.dilItemRequest.value?.tanggal
     }

@@ -43,7 +43,7 @@ class SearchDilRepository(
             dilValidate.tanggal_validasi,
             dilValidate.cabut_siaga,
             dilValidate.jumlah_kwh,
-            dilValidate.tagihan,
+            dilValidate.tagihan.toInt(),
             dilValidate.tarif
         )
     }

@@ -5,9 +5,11 @@
     <data>
 
         <import type="android.view.View" />
-<variable
-    name="viewModel"
-    type="com.example.tagihin.view.searchdil.SearchDilViewModel" />
+
+        <variable
+            name="viewModel"
+            type="com.example.tagihin.view.searchdil.SearchDilViewModel" />
+
         <variable
             name="dilItem"
             type="com.example.tagihin.data.remote.model.DilItemRequest" />
@@ -50,16 +52,16 @@
                             app:hintEnabled="false">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:layout_width="match_parent"
                                 android:id="@+id/nomor_meter_rusak"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto_regular"
                                 android:hint="Stand meter cabut siaga"
                                 android:inputType="number"
-                                android:text="@={viewModel.dilValidate.cabut_siaga}"
                                 android:longClickable="false"
                                 android:paddingStart="4dp"
                                 android:singleLine="true"
+                                android:text="@={viewModel.cabutSiaga}"
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,16 +88,17 @@
                             app:hintEnabled="false">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/nomor_meter_siaga"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto_regular"
-                                android:id="@+id/nomor_meter_siaga"
                                 android:hint="Jumlah KWH terpakai"
-                                android:longClickable="false"
                                 android:inputType="number"
-                                android:text="@={viewModel.dilValidate.jumlah_kwh}"
+                                android:enabled="false"
+                                android:longClickable="false"
                                 android:paddingStart="4dp"
                                 android:singleLine="true"
+                                android:text="@={`` + viewModel.dilValidate.jumlah_kwh}"
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,23 +121,24 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:prefixText="Rp"
-                            app:prefixTextColor="@color/black"
-                            app:prefixTextAppearance="@style/prefix"
                             app:boxBackgroundColor="@android:color/transparent"
-                            app:hintEnabled="false">
+                            app:hintEnabled="false"
+                            app:prefixText="Rp"
+                            app:prefixTextAppearance="@style/prefix"
+                            app:prefixTextColor="@color/greyLine">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/koor_x"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:enabled="false"
                                 android:fontFamily="@font/roboto_regular"
-                                android:id="@+id/koor_x"
                                 android:hint="Tagihan"
                                 android:inputType="number"
                                 android:longClickable="false"
-                                android:text="@={viewModel.dilValidate.tagihan}"
                                 android:paddingStart="4dp"
                                 android:singleLine="true"
+                                android:text="@={`` + viewModel.dilValidate.tagihan}"
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -157,23 +161,23 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:prefixText="Rp"
-                            app:prefixTextColor="@color/black"
-                            app:prefixTextAppearance="@style/prefix"
                             app:boxBackgroundColor="@android:color/transparent"
-                            app:hintEnabled="false">
+                            app:hintEnabled="false"
+                            app:prefixText="Rp"
+                            app:prefixTextAppearance="@style/prefix"
+                            app:prefixTextColor="@color/black">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/koor_y"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto_regular"
-                                android:id="@+id/koor_y"
                                 android:hint="Tarif listrik"
                                 android:inputType="number"
                                 android:longClickable="false"
-                                android:text="@={viewModel.dilValidate.tarif}"
                                 android:paddingStart="4dp"
                                 android:singleLine="true"
+                                android:text="@={`` + viewModel.cost}"
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 

@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <import type="android.text.TextUtils" />
 
         <import type="android.view.View" />
@@ -171,7 +170,7 @@
                                 android:longClickable="false"
                                 android:paddingStart="4dp"
                                 android:singleLine="true"
-                                android:text="@{viewModel.latLongFinal.second.toString())}"
+                                android:text="@{viewModel.latLongFinal.second.toString()}"
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -201,13 +200,13 @@
                                 android:id="@+id/stand_meter_psg_siaga"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:enabled="@{TextUtils.isEmpty(viewModel.dilItemRequest.pasang_siaga.toString())}"
+                                android:enabled="@{TextUtils.isEmpty(`` + viewModel.dilItemRequest.pasang_siaga)}"
                                 android:fontFamily="@font/roboto_regular"
                                 android:hint="Stand meter pasang siaga"
                                 android:longClickable="false"
                                 android:paddingStart="4dp"
                                 android:singleLine="true"
-                                android:text="@={viewModel.dilItemRequest.pasang_siaga}"
+                                android:text="@={`` + viewModel.dilItemRequest.pasang_siaga}"
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 

@@ -25,7 +25,7 @@ data class DilItemResponse (
     var tanggal : String = "",
     var meter_rusak : String = "",
     var meter_siaga : String = "",
-    var pasang_siaga : String = "",
+    var pasang_siaga : Int = 0,
     var x_upload : String = "",
     var y_upload : String = "",
     var foto_siaga : String? = null,
@@ -50,7 +50,7 @@ data class DilItemRequest (
     var tanggal : String = "",
     var meter_rusak : String = "",
     var meter_siaga : String = "",
-    var pasang_siaga : String = "",
+    var pasang_siaga : Int = 0,
     var x_upload : String = "",
     var y_upload : String = "",
     var foto_siaga : Bitmap? = null,
@@ -59,10 +59,10 @@ data class DilItemRequest (
 )
 
 data class DilItemValidationRequest(
-    var id : String = "",
+    var id : Int = -1,
     var tanggal_validasi : String = "",
-    var cabut_siaga : String = "",
-    var jumlah_kwh : String = "",
-    var tagihan : String = "",
-    var tarif : String = ""
+    var cabut_siaga : Int = 0,
+    var jumlah_kwh : Int = 0,
+    var tagihan : Int = 0,
+    var tarif : Int = 0
 )

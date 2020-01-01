@@ -5,13 +5,19 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseMethod
+import androidx.lifecycle.MutableLiveData
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.example.tagihin.R
+import com.example.tagihin.data.remote.model.DilItemValidationRequest
+import com.google.android.material.textfield.TextInputEditText
 
 @BindingAdapter("imageUrl")
 fun loadImage(view : ImageView, url : String?){
@@ -50,3 +56,26 @@ fun View.setVisibility(value : String?){
         View.VISIBLE
     }
 }
+
+@BindingAdapter(value = ["kwhUsed","liveData"])
+fun TextInputEditText.setKwhUsed(newValue : Int, liveData : MutableLiveData<DilItemValidationRequest>){
+    if(this.text.toString() != newValue.toString()){
+        this.setText(newValue)
+        liveData.value?.cabut_siaga = newValue
+    }
+}
+
+@InverseBindingAdapter(attribute = "kwhUsed")
+fun TextInputEditText.getKwhUsed() : String{
+    return this.text.toString()
+}
+//@BindingAdapter(value=["cabutSiaga","pasangSiaga"])
+//fun TextInputEditText.calculateResult(cabutSiaga : String, pasangSiaga : String){
+//    val convertedCabutSiaga = if(cabutSiaga.isEmpty()) 0 else cabutSiaga.toInt()
+//    val convertedPasangSiaga = if(pasangSiaga.isEmpty()) 0 else pasangSiaga.toInt()
+//    val result = (convertedCabutSiaga - convertedPasangSiaga).toString()
+//    if(this.text.toString() != result) {
+//        this.setText(result)
+//    }
+//}
+

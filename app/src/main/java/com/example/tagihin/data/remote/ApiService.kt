@@ -84,12 +84,12 @@ interface ApiService {
     fun validateDil(
         @Field("username") username : String,
         @Field("level_user") levelUser : Int,
-        @Field("id") id : String,
+        @Field("id") id : Int,
         @Field("tanggal_validasi") tanggalValidasi: String,
-        @Field("cabut_siaga") cabutSiaga : String,
-        @Field("jumlah_kwh") jumlahKwh : String,
-        @Field("tagihan") tagihan : String,
-        @Field("tarif") tarif : String
+        @Field("cabut_siaga") cabutSiaga : Int,
+        @Field("jumlah_kwh") jumlahKwh : Int,
+        @Field("tagihan") tagihan : Int,
+        @Field("tarif") tarif : Int
     ) : Maybe<Response<GeneralResponse>>
     @FormUrlEncoded
     @POST("Api/searching")

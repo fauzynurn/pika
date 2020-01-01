@@ -386,7 +386,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2"
                                     android:fontFamily="@font/roboto_bold"
-                                    android:text="Upload DIL"
+                                    android:text="kWh Meter Dummy"
                                     android:textColor="@color/white"
                                     android:textSize="14sp" />
 

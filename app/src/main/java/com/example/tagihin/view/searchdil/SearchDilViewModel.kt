@@ -20,8 +20,10 @@ class SearchDilViewModel(val repo: SearchDilRepository) : ViewModel() {
     var dilItem = MutableLiveData<DilItemResponse?>(DilItemResponse())
     var query = MutableLiveData<String>()
     var loadingState = MutableLiveData<Boolean>(false)
+    var cabutSiaga = MutableLiveData<String>(0.toString())
+    var cost = MutableLiveData(0)
     var updateSuccess = SingleLiveEvent<Boolean>()
-    lateinit var dilValidate: DilItemValidationRequest
+    var dilValidate = MutableLiveData<DilItemValidationRequest>(DilItemValidationRequest())
     var dilItemRequest: LiveData<DilItemRequest?> = Transformations.map(dilItem) {
         DilItemRequest(
             it?.id.throwEmptyStringIfNull(),
@@ -40,7 +42,7 @@ class SearchDilViewModel(val repo: SearchDilRepository) : ViewModel() {
             it?.tanggal.throwEmptyStringIfNull(),
             it?.meter_rusak.throwEmptyStringIfNull(),
             it?.meter_siaga.throwEmptyStringIfNull(),
-            it?.pasang_siaga.throwEmptyStringIfNull(),
+            it?.pasang_siaga.throwZeroIfNull(),
             it?.x_upload.throwZeroIfNull(),
             it?.y_upload.throwZeroIfNull()
         )
@@ -59,7 +61,8 @@ class SearchDilViewModel(val repo: SearchDilRepository) : ViewModel() {
             .subscribe({
                 loadingState.postValue(false)
                 dilItem.postValue(it?.body()?.data)
-                dilValidate = DilItemValidationRequest(id = it.body()?.data?.id!!)
+                dilValidate.value?.id =  it.body()?.data?.id!!.toInt()
+                cabutSiaga.postValue(it?.body()?.data?.pasang_siaga!!.toString())
             }, {
                 error.postValue(it.message!!)
             })
@@ -77,7 +80,7 @@ class SearchDilViewModel(val repo: SearchDilRepository) : ViewModel() {
             dilItemRequest.value?.tanggal.throwEmptyStringIfNull(),
             dilItemRequest.value?.meter_rusak.throwEmptyStringIfNull(),
             dilItemRequest.value?.meter_siaga.throwEmptyStringIfNull(),
-            dilItemRequest.value?.pasang_siaga.throwEmptyStringIfNull(),
+            dilItemRequest.value?.pasang_siaga.toString(),
             dilItemRequest.value?.no_hp.throwEmptyStringIfNull(),
             latLongFinal.value?.first.toString(),
             latLongFinal.value?.second.toString(),
@@ -101,9 +104,19 @@ class SearchDilViewModel(val repo: SearchDilRepository) : ViewModel() {
         return if (this != "" && this != null) this else "0"
     }
 
+    fun Int?.throwZeroIfNull(): Int {
+        return this ?: 0
+    }
+
+    fun calculateKwhUsed(cabutSiaga: Int, pasangSiaga: Int) : Int = cabutSiaga.minus(pasangSiaga)
+
+    fun calculateBill(kwhUsed : Int, cost : Int) : Int = (kwhUsed * cost * 0.1).toInt()
+
     @SuppressLint("CheckResult")
     fun sendValidationForm() {
-        repo.validateDil(dilValidate)
+        dilValidate.value?.tarif = cost.value!!
+        dilValidate.value?.cabut_siaga = cabutSiaga.value?.toInt()!!
+        repo.validateDil(dilValidate.value!!)
             .subscribeOn(Schedulers.io())
             .subscribe({
                 updateSuccess.postValue(true)
