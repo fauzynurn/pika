@@ -20,7 +20,7 @@ class SearchDilViewModel(val repo: SearchDilRepository) : ViewModel() {
     var dilItem = MutableLiveData<DilItemResponse?>(DilItemResponse())
     var query = MutableLiveData<String>()
     var loadingState = MutableLiveData<Boolean>(false)
-    var cabutSiaga = MutableLiveData<String>(0.toString())
+    var cabutSiaga = MutableLiveData(0)
     var cost = MutableLiveData(0)
     var updateSuccess = SingleLiveEvent<Boolean>()
     var dilValidate = MutableLiveData<DilItemValidationRequest>(DilItemValidationRequest())
@@ -62,7 +62,7 @@ class SearchDilViewModel(val repo: SearchDilRepository) : ViewModel() {
                 loadingState.postValue(false)
                 dilItem.postValue(it?.body()?.data)
                 dilValidate.value?.id =  it.body()?.data?.id!!.toInt()
-                cabutSiaga.postValue(it?.body()?.data?.pasang_siaga!!.toString())
+                cabutSiaga.postValue(it?.body()?.data?.pasang_siaga!!)
             }, {
                 error.postValue(it.message!!)
             })

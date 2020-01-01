@@ -78,9 +78,9 @@ class ValidateBottomSheet : BottomSheet(),
         mActivity = activity as SearchDilActivity
         binding?.lifecycleOwner = this
         binding?.viewModel = viewModel
-        //binding?.formatter = DecimalFormat("#,###")
+        binding?.formatter = DecimalFormat("#,###")
         viewModel.cabutSiaga.observe(this, Observer {
-            if(it != null && it.isNotEmpty()) {
+            if(it != null) {
                 //do it in immutable way
                 val dilValidate = viewModel.dilValidate.value
                 dilValidate.apply {

@@ -17,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.example.tagihin.R
 import com.example.tagihin.data.remote.model.DilItemValidationRequest
+import com.example.tagihin.utils.Converters.convertToMoney
 import com.google.android.material.textfield.TextInputEditText
 
 @BindingAdapter("imageUrl")
@@ -57,18 +58,16 @@ fun View.setVisibility(value : String?){
     }
 }
 
-@BindingAdapter(value = ["kwhUsed","liveData"])
-fun TextInputEditText.setKwhUsed(newValue : Int, liveData : MutableLiveData<DilItemValidationRequest>){
-    if(this.text.toString() != newValue.toString()){
-        this.setText(newValue)
-        liveData.value?.cabut_siaga = newValue
-    }
-}
-
-@InverseBindingAdapter(attribute = "kwhUsed")
-fun TextInputEditText.getKwhUsed() : String{
-    return this.text.toString()
-}
+//@BindingAdapter("setText")
+//fun TextInputEditText.applyText(value : String){
+//    if(this.text.toString().isNotEmpty()) {
+//        this.setSelection(this.text?.length!!)
+//    }
+//    this.setText(value)
+//}
+//
+//@InverseBindingAdapter(attribute = "setText")
+//fun TextInputEditText.getAppliedText() : String = this.text.toString()
 //@BindingAdapter(value=["cabutSiaga","pasangSiaga"])
 //fun TextInputEditText.calculateResult(cabutSiaga : String, pasangSiaga : String){
 //    val convertedCabutSiaga = if(cabutSiaga.isEmpty()) 0 else cabutSiaga.toInt()

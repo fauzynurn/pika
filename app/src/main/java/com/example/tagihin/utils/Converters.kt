@@ -8,10 +8,10 @@ import java.text.DecimalFormat
 
 object Converters {
 
-//    @JvmStatic
-//    @InverseMethod("stringToMoney")
-//    fun moneyToString(formatter : DecimalFormat,value : Int) : String = formatter.format(value)
-//
-//    @JvmStatic
-//    fun stringToMoney(formatter : DecimalFormat,value : String) : String = formatter.format(value)
+    @InverseMethod("convertFromMoney")
+    @JvmStatic
+    fun convertToMoney(formatter : DecimalFormat,value : Int) : String = formatter.format(value)
+
+    @JvmStatic
+    fun convertFromMoney(formatter: DecimalFormat, value : String) : Int = value.replace(",","").toInt()
 }

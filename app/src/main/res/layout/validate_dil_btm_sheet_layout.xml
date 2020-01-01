@@ -6,6 +6,10 @@
 
         <import type="android.view.View" />
 
+        <import type="com.example.tagihin.utils.Converters" />
+<variable
+    name="formatter"
+    type="java.text.DecimalFormat" />
         <variable
             name="viewModel"
             type="com.example.tagihin.view.searchdil.SearchDilViewModel" />
@@ -61,7 +65,7 @@
                                 android:longClickable="false"
                                 android:paddingStart="4dp"
                                 android:singleLine="true"
-                                android:text="@={viewModel.cabutSiaga}"
+                                android:text="@={`` + viewModel.cabutSiaga}"
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,10 +95,10 @@
                                 android:id="@+id/nomor_meter_siaga"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:enabled="false"
                                 android:fontFamily="@font/roboto_regular"
                                 android:hint="Jumlah KWH terpakai"
                                 android:inputType="number"
-                                android:enabled="false"
                                 android:longClickable="false"
                                 android:paddingStart="4dp"
                                 android:singleLine="true"
@@ -138,7 +142,7 @@
                                 android:longClickable="false"
                                 android:paddingStart="4dp"
                                 android:singleLine="true"
-                                android:text="@={`` + viewModel.dilValidate.tagihan}"
+                                android:text="@={Converters.convertToMoney(formatter,viewModel.dilValidate.tagihan)}"
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -177,7 +181,7 @@
                                 android:longClickable="false"
                                 android:paddingStart="4dp"
                                 android:singleLine="true"
-                                android:text="@={`` + viewModel.cost}"
+                                android:text="@={Converters.convertToMoney(formatter,viewModel.cost)}"
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
