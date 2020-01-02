@@ -61,8 +61,10 @@ class SearchDilViewModel(val repo: SearchDilRepository) : ViewModel() {
             .subscribe({
                 loadingState.postValue(false)
                 dilItem.postValue(it?.body()?.data)
-                dilValidate.value?.id =  it.body()?.data?.id!!.toInt()
-                cabutSiaga.postValue(it?.body()?.data?.pasang_siaga!!)
+                if(it?.body()?.data != null) {
+                    dilValidate.value?.id = it.body()?.data?.id!!.toInt()
+                    cabutSiaga.postValue(it.body()?.data?.pasang_siaga!!)
+                }
             }, {
                 error.postValue(it.message!!)
             })

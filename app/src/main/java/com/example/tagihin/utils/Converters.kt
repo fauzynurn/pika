@@ -13,5 +13,5 @@ object Converters {
     fun convertToMoney(formatter : DecimalFormat,value : Int) : String = formatter.format(value)
 
     @JvmStatic
-    fun convertFromMoney(formatter: DecimalFormat, value : String) : Int = value.replace(",","").toInt()
+    fun convertFromMoney(formatter: DecimalFormat, value : String) : Int = if(value.isNotEmpty()) value.replace(",","").toInt() else 0
 }

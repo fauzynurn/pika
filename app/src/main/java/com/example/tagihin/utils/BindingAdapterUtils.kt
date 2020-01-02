@@ -21,10 +21,15 @@ import com.example.tagihin.utils.Converters.convertToMoney
 import com.google.android.material.textfield.TextInputEditText
 
 @BindingAdapter("imageUrl")
-fun loadImage(view : ImageView, url : String?){
-    if(url != null) {
+fun loadImage(view: ImageView, url: String?) {
+    if (url != null) {
         val circularProgressDrawable = CircularProgressDrawable(view.context)
-        circularProgressDrawable.setColorFilter(ContextCompat.getColor(view.context, R.color.fadeBlue), PorterDuff.Mode.SRC_IN )
+        circularProgressDrawable.setColorFilter(
+            ContextCompat.getColor(
+                view.context,
+                R.color.fadeBlue
+            ), PorterDuff.Mode.SRC_IN
+        )
         circularProgressDrawable.strokeWidth = 5f
         circularProgressDrawable.centerRadius = 25f
         circularProgressDrawable.start()
@@ -50,11 +55,19 @@ fun loadImage(view : ImageView, url : String?){
 }
 
 @BindingAdapter("visibility")
-fun View.setVisibility(value : String?){
-    this.visibility = if(value == "TTT" || value == null) {
+fun View.setVisibility(value: String?) {
+    this.visibility = if (value == "TTT" || value == null) {
         View.GONE
     } else {
         View.VISIBLE
+    }
+}
+
+@BindingAdapter("android:text")
+fun TextInputEditText.setStringWIthSelection(str: String) {
+    if(this.text.toString() != str && str.isNotEmpty()) {
+        this.setText(str)
+        this.setSelection(this.text?.length!!)
     }
 }
 
