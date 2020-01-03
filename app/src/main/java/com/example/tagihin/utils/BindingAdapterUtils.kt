@@ -7,8 +7,10 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
 import androidx.databinding.InverseMethod
 import androidx.lifecycle.MutableLiveData
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
@@ -68,6 +70,28 @@ fun TextInputEditText.setStringWIthSelection(str: String) {
     if(this.text.toString() != str && str.isNotEmpty()) {
         this.setText(str)
         this.setSelection(this.text?.length!!)
+    }
+}
+
+@BindingAdapter("textAutoFillFactor")
+fun TextInputEditText.setTextAutoFill(str : String){
+    if(this.text.toString() != str && this.text.toString().isNotEmpty()) {
+        this.setText(str)
+    }else if(this.text.toString().isEmpty()){
+        this.setText("0")
+    }
+    this.setSelection(this.text?.length!!)
+}
+
+@InverseBindingAdapter(attribute = "textAutoFillFactor")
+fun TextInputEditText.getTextAutoFill(): String = this.text.toString()
+
+@BindingAdapter("textAutoFillFactorAttrChanged")
+fun TextInputEditText.setListeners(
+    attrChange: InverseBindingListener
+) {
+    this.addTextChangedListener {
+        attrChange.onChange()
     }
 }
 

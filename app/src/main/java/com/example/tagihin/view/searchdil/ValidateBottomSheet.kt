@@ -150,6 +150,6 @@ class ValidateBottomSheet : BottomSheet(),
         binding?.validateBtn?.isEnabled = true
         viewModel.dilValidate.value?.tanggal_validasi =
             String.format("%d-%d-%d", year, month + 1, day)
-        binding?.date?.text = viewModel.dilItemRequest.value?.tanggal
+        binding?.date?.text = viewModel.dilValidate.value?.tanggal_validasi
     }
 }

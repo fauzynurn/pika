@@ -176,7 +176,7 @@ class ConfirmBottomSheet(val dilItem: DilItemResponse) : BottomSheet(),
         viewModel.updateSuccess.observe(this, observer!!)
         viewModel.latLong.observe(this, Observer {
             if(it.first != 0.0 && it.second != 0.0 ){
-                viewModel.latLongFinal.value = Pair<Double,Double>(it.first, it.second)
+                viewModel.latLongFinal.value = Pair<Double,Double>(it.first!!, it.second!!)
             }else{
                 getLatLong()
             }

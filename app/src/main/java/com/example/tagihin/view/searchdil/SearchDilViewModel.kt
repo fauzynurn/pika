@@ -47,10 +47,10 @@ class SearchDilViewModel(val repo: SearchDilRepository) : ViewModel() {
             it?.y_upload.throwZeroIfNull()
         )
     }
-    var latLongFinal = MutableLiveData<Pair<Double, Double>>()
-    var latLong: LiveData<Pair<Double, Double>> =
+    var latLongFinal = MutableLiveData<Pair<Double?, Double?>>(Pair(0.0,0.0))
+    var latLong: LiveData<Pair<Double?, Double?>> =
         Transformations.map(dilItemRequest) {
-            Pair(it?.x_upload?.toDouble()!!, it.y_upload.toDouble())
+            Pair(it?.x_upload?.toDouble(), it?.y_upload?.toDouble())
         }
 
 
@@ -61,7 +61,7 @@ class SearchDilViewModel(val repo: SearchDilRepository) : ViewModel() {
             .subscribe({
                 loadingState.postValue(false)
                 dilItem.postValue(it?.body()?.data)
-                if(it?.body()?.data != null) {
+                if(it?.body()?.data?.id?.isNotEmpty()!!) {
                     dilValidate.value?.id = it.body()?.data?.id!!.toInt()
                     cabutSiaga.postValue(it.body()?.data?.pasang_siaga!!)
                 }
