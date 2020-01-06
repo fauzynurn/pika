@@ -56,13 +56,13 @@
                                 android:id="@+id/nomor_meter_rusak"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:enabled="@{TextUtils.isEmpty(viewModel.dilItemRequest.meter_rusak.toString())}"
+                                android:enabled="@{viewModel.dilItemRequest.meter_rusak == 0}"
                                 android:fontFamily="@font/roboto_regular"
                                 android:hint="Nomor meter rusak"
                                 android:longClickable="false"
                                 android:paddingStart="4dp"
                                 android:singleLine="true"
-                                android:text="@={viewModel.dilItemRequest.meter_rusak}"
+                                android:text="@={`` + viewModel.dilItemRequest.meter_rusak}"
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,13 +92,13 @@
                                 android:id="@+id/nomor_meter_siaga"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:enabled="@{TextUtils.isEmpty(viewModel.dilItemRequest.meter_siaga.toString())}"
+                                android:enabled="@{viewModel.dilItemRequest.meter_siaga == 0}"
                                 android:fontFamily="@font/roboto_regular"
                                 android:hint="Nomor meter siaga"
                                 android:longClickable="false"
                                 android:paddingStart="4dp"
                                 android:singleLine="true"
-                                android:text="@={viewModel.dilItemRequest.meter_siaga}"
+                                android:text="@={`` + viewModel.dilItemRequest.meter_siaga}"
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -200,7 +200,7 @@
                                 android:id="@+id/stand_meter_psg_siaga"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:enabled="@{TextUtils.isEmpty(`` + viewModel.dilItemRequest.pasang_siaga)}"
+                                android:enabled="@{viewModel.dilItemRequest.pasang_siaga == 0}"
                                 android:fontFamily="@font/roboto_regular"
                                 android:hint="Stand meter pasang siaga"
                                 android:longClickable="false"
@@ -457,7 +457,7 @@
                         android:layout_height="50dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="20dp"
-                        android:enabled="@{TextUtils.isEmpty(viewModel.dilItemRequest.meter_rusak.toString())}"
+                        android:enabled="@{TextUtils.isEmpty(`` + viewModel.dilItemRequest.meter_rusak)}"
                         android:layout_marginBottom="10dp"
                         android:fontFamily="@font/roboto_bold"
                         android:text="Konfirmasi"
