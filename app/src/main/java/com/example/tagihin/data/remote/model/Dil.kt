@@ -30,7 +30,10 @@ data class DilItemResponse (
     var y_upload : String = "",
     var foto_siaga : String? = null,
     var foto_rusak : String? = null,
-    var foto_bangunan : String? = null
+    var foto_bangunan : String? = null,
+    var tanggal_validasi : String? = null,
+    var cabut_siaga : String? = null,
+    var tarif_listrik : String? = null
 )
 
 data class DilItemRequest (

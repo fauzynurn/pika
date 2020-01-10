@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_transfer"
+        android:title="Transfer"
+        android:icon="@drawable/transfer"
+        app:showAsAction="always"/>
+    <item android:id="@+id/action_add_to_wo"
+        android:title="Tambah ke WO"
+        android:icon="@drawable/wo"
+        app:showAsAction="always"/>
+</menu>

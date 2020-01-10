@@ -1,30 +1,28 @@
 package com.example.tagihin.view.bill.unpaid
 
-import android.content.Intent
 import android.os.Bundle
+import android.view.ActionMode
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tagihin.R
 import com.example.tagihin.base.BaseActivity
-import com.example.tagihin.data.remote.model.UnpaidBill
 import com.example.tagihin.databinding.ActivityBillBinding
-import com.example.tagihin.utils.Consts
 import com.example.tagihin.view.bill.unpaid.fragments.UnpaidFragment
 import com.example.tagihin.view.bill.unpaid.fragments.UnpaidSearchFragment
-import com.example.tagihin.view.detail.DetailBillActivity
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
+
 
 class UnpaidActivity : BaseActivity<UnpaidViewModel, ActivityBillBinding>(UnpaidViewModel::class) {
     var woList: ArrayList<Int> = ArrayList()
     val LIST_FRAGMENT = "list_fragment"
     val SEARCH_LIST_FRAGMENT = "search_list_fragment"
     private var textChangeListener: Disposable? = null
+    private var mActionMode: ActionMode? = null
     override fun getLayoutRes(): Int = R.layout.activity_bill
 
     override fun showMessage(message: String) {
@@ -32,6 +30,30 @@ class UnpaidActivity : BaseActivity<UnpaidViewModel, ActivityBillBinding>(Unpaid
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        val mActionModeCallback: ActionMode.Callback = object : ActionMode.Callback {
+            override fun onCreateActionMode(
+                mode: ActionMode,
+                menu: Menu
+            ): Boolean { // Inflate a menu resource providing context menu items
+                val inflater: MenuInflater = mode.menuInflater
+                inflater.inflate(R.menu.bill_menu, menu)
+                return true
+            }
+
+            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                return false // Return false if nothing is done
+            }
+
+            override fun onActionItemClicked(
+                mode: ActionMode?,
+                item: MenuItem?
+            ): Boolean {
+                return false
+            }
+
+            override fun onDestroyActionMode(mode: ActionMode?) {}
+        }
+
         supportFragmentManager.beginTransaction()
             .add(R.id.bill_viewpager, UnpaidFragment(), LIST_FRAGMENT)
             .add(R.id.bill_viewpager, UnpaidSearchFragment(), SEARCH_LIST_FRAGMENT)
@@ -69,7 +91,7 @@ class UnpaidActivity : BaseActivity<UnpaidViewModel, ActivityBillBinding>(Unpaid
                 viewModel.woList.value = woList
                 showMessage("Data berhasil ditambah ke WO")
                 viewModel.refresh()
-            }else{
+            } else {
                 showMessage("Data sudah ada di WO")
             }
         })
@@ -77,14 +99,16 @@ class UnpaidActivity : BaseActivity<UnpaidViewModel, ActivityBillBinding>(Unpaid
             viewModel.woList.value = woList
             if (it <= 0) {
                 viewModel.multiSelectMode.value = false
-                dataBinding.addWoFab.hide()
-                dataBinding.cancelWoFab.hide()
+//                dataBinding.addWoFab.hide()
+//                dataBinding.cancelWoFab.hide()
                 //dataBinding.moveToWoContainer.visibility = View.GONE
             } else {
                 viewModel.multiSelectMode.value = true
-                dataBinding.addWoFab.show()
-                dataBinding.cancelWoFab.show()
-                dataBinding.addWoFab.text = String.format("Pindah ke WO (%d)", it)
+                if (mActionMode == null) {
+                    mActionMode = startActionMode(mActionModeCallback)
+                }
+                dataBinding.toolbarMain.startActionMode(mActionModeCallback)
+                mActionMode?.title = String.format("%d item dipilih", it)
 //                dataBinding.moveToWoBtn.text = String.format("Pindahkan ke WO (%d)", it)
 //                dataBinding.moveToWoContainer.visibility = View.VISIBLE
             }
