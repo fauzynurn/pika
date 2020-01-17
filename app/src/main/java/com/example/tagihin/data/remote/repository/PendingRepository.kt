@@ -117,6 +117,12 @@ class PendingRepository (val apiService : ApiService,
         )
     }
 
+    fun transferBill(username : String, list : HashMap<String,Int>) : Maybe<Response<GeneralResponse>> {
+        return apiService.transferBill(
+            pref.getUsername()!!,pref.getPrivilege(),username,list
+        )
+    }
+
     fun getPendingBill(): Listing<PendingBill> {
         val boundaryCallback =
             PendingBoundaryCallback(

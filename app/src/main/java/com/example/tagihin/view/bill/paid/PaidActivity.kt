@@ -38,7 +38,7 @@ class PaidActivity : BaseActivity<PaidViewModel, ActivityBillBinding>(PaidViewMo
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        dataBinding.woControllerContainer.visibility = View.GONE
+        dataBinding.multiSelectNav.visibility = View.GONE
         supportFragmentManager.beginTransaction()
             .add(R.id.bill_viewpager, PaidFragment(), LIST_FRAGMENT)
             .add(R.id.bill_viewpager, PaidSearchFragment(), SEARCH_LIST_FRAGMENT)

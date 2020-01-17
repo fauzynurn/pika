@@ -59,7 +59,9 @@ class UnpaidFragment : BaseFragment<UnpaidViewModel, FragmentBillBinding>(Unpaid
             dataBinding.swipeRefresh.isRefreshing = it == NetworkState.LOADING
         })
         mActivity?.viewModel?.resetSelection?.observe(mActivity!!, Observer {
-            billAdapter?.notifyDataSetChanged()
+            if(it) {
+                billAdapter?.notifyDataSetChanged()
+            }
         })
         viewModel.networkState.observe(this, Observer {
             billAdapter?.setNetworkState(it)

@@ -1,8 +1,10 @@
 package com.example.tagihin.view.bill.pending
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +19,7 @@ import com.example.tagihin.view.bill.pending.fragments.PendingSearchFragment
 import com.example.tagihin.view.bill.unpaid.fragments.UnpaidFragment
 import com.example.tagihin.view.bill.unpaid.fragments.UnpaidSearchFragment
 import com.example.tagihin.view.detail.DetailBillActivity
+import com.example.tagihin.view.officer.OfficerListActivity
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.disposables.Disposable
@@ -27,6 +30,7 @@ class PendingActivity : BaseActivity<PendingViewModel, ActivityBillBinding>(Pend
     var woList: ArrayList<Int> = ArrayList()
     val LIST_FRAGMENT = "list_fragment"
     val SEARCH_LIST_FRAGMENT = "search_list_fragment"
+    val SELECT_OFFICER = 66
     private var textChangeListener: Disposable? = null
     override fun getLayoutRes(): Int = R.layout.activity_bill
 
@@ -52,17 +56,20 @@ class PendingActivity : BaseActivity<PendingViewModel, ActivityBillBinding>(Pend
                     manageFragmentTransaction(LIST_FRAGMENT)
                 }
             }
-        dataBinding.cancelWoFab.setOnClickListener {
+        dataBinding.transferBtn.setOnClickListener {
+            startActivityForResult(
+                Intent(this, OfficerListActivity::class.java), SELECT_OFFICER
+            )
+        }
+        dataBinding.cancelBtn.setOnClickListener {
             woList.clear()
             viewModel.woListSize.value = woList.size
             viewModel.resetSelection.value = true
         }
-        dataBinding.addWoFab.setOnClickListener {
+        dataBinding.addWoBtn.setOnClickListener {
             showDialog()
             viewModel.moveToWO(woList)
         }
-        dataBinding.addWoFab.hide()
-        dataBinding.cancelWoFab.hide()
         viewModel.updateWo.observe(this, Observer {
             hideDialog()
             if (it) {
@@ -76,22 +83,43 @@ class PendingActivity : BaseActivity<PendingViewModel, ActivityBillBinding>(Pend
                 showMessage("Data sudah ada di WO")
             }
         })
+
+        viewModel.transferBill.observe(this, Observer {
+            hideDialog()
+            if (it) {
+                woList.clear()
+                viewModel.woListSize.value = woList.size
+                viewModel.resetSelection.value = true
+                viewModel.woList.value = woList
+                showMessage("Tagihan berhasil dikirim")
+                viewModel.refresh()
+            } else {
+                showMessage("Terdapat kesalahan saat proses transfer")
+            }
+        })
         viewModel.woListSize.observe(this, Observer {
             viewModel.woList.value = woList
             if (it <= 0) {
                 viewModel.multiSelectMode.value = false
-                dataBinding.addWoFab.hide()
-                dataBinding.cancelWoFab.hide()
-                //dataBinding.moveToWoContainer.visibility = View.GONE
+                dataBinding.multiSelectNav.visibility = View.GONE
             } else {
                 viewModel.multiSelectMode.value = true
-                dataBinding.addWoFab.show()
-                dataBinding.cancelWoFab.show()
-                dataBinding.addWoFab.text = String.format("Pindah ke WO (%d)", it)
+                dataBinding.navText.text = String.format("%d item dipilih", it)
 //                dataBinding.moveToWoBtn.text = String.format("Pindahkan ke WO (%d)", it)
-//                dataBinding.moveToWoContainer.visibility = View.VISIBLE
+                dataBinding.multiSelectNav.visibility = View.VISIBLE
             }
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            SELECT_OFFICER -> {
+                if(resultCode == Activity.RESULT_OK){
+                    viewModel.transferBill(data?.getStringExtra("recipient")!!, woList)
+                }
+            }
+        }
     }
 
     override fun setupToolbar() {

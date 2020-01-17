@@ -73,6 +73,8 @@ class SearchDilActivity :
         }
     }
 
+    fun getCurrentQuery() : String = dataBinding.searchBox.text.toString()
+
     override fun setupToolbar() {}
 
 }

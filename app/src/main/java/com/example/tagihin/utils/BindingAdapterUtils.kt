@@ -67,7 +67,7 @@ fun View.setVisibility(value: String?) {
 
 @BindingAdapter("android:text")
 fun TextInputEditText.setStringWIthSelection(str: String) {
-    if(this.text.toString() != str && str.isNotEmpty()) {
+    if(this.text.toString() != str) {
         this.setText(str)
         this.setSelection(this.text?.length!!)
     }

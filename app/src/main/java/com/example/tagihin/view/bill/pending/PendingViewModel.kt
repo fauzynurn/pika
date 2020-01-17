@@ -21,6 +21,7 @@ class PendingViewModel (val repo : PendingRepository) : ViewModel() {
     var resetSelection : MutableLiveData<Boolean> = MutableLiveData()
     var disposable : Disposable? = null
     var updateWo : MutableLiveData<Boolean> = MutableLiveData()
+    var transferBill : MutableLiveData<Boolean> = MutableLiveData()
     private val repoResult = Transformations.map(shouldTriggerSomething) {
         repo.getPendingBill()
     }
@@ -60,7 +61,17 @@ class PendingViewModel (val repo : PendingRepository) : ViewModel() {
             })
     }
 
-    fun saveToDb(){
-
+    fun transferBill(username : String, list : ArrayList<Int>){
+        val hashMap : HashMap<String,Int> = HashMap()
+        for((index, value) in list.withIndex()){
+            hashMap[String.format("checked_id[%d]", index)] = value
+        }
+        disposable = repo.transferBill(username,hashMap)
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                transferBill.postValue(it.body()?.status)
+            }, {
+                Timber.e(it)
+            })
     }
 }

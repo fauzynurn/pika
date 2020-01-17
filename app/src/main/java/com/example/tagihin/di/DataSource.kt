@@ -22,6 +22,7 @@ val repositoryModule = module {
     single {SavedBillRepository(get(),get(),Executors.newSingleThreadExecutor(), get())}
     single{ TagihinDb.create(androidContext(), false)}
     single { SettingRepository(Executors.newSingleThreadExecutor(),get(), get(), get())}
+    single {OfficerRepository(get(),get(),Executors.newSingleThreadExecutor(),10)}
 }
 
 val prefModule = module {

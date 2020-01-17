@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+<import type="android.text.TextUtils"/>
         <import type="android.view.View" />
 
         <import type="com.example.tagihin.utils.Converters" />
@@ -61,6 +61,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto_regular"
                                 android:hint="Stand meter cabut siaga"
+                                android:enabled="@{TextUtils.isEmpty(viewModel.dilItem.cabut_siaga) ? true : false}"
                                 android:inputType="number"
                                 android:longClickable="false"
                                 android:paddingStart="4dp"
@@ -178,6 +179,7 @@
                                 android:fontFamily="@font/roboto_regular"
                                 android:hint="Tarif listrik"
                                 android:inputType="number"
+                                android:enabled="@{TextUtils.isEmpty(viewModel.dilItem.tarif_listrik) ? true : false}"
                                 android:longClickable="false"
                                 android:paddingStart="4dp"
                                 android:singleLine="true"
@@ -210,6 +212,7 @@
                             android:textColor="@color/greyTagihin" />
 
                         <LinearLayout
+                            android:clickable="@{TextUtils.isEmpty(viewModel.dilItem.tanggal_validasi) ? true : false}"
                             android:id="@+id/date_picker_btn"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -223,7 +226,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="13dp"
                                 android:fontFamily="@font/roboto_medium"
-                                android:text="Pilih tanggal"
+                                android:text="@{TextUtils.isEmpty(viewModel.dilItem.tanggal_validasi) ? `Pilih tanggal` : viewModel.dilItem.tanggal_validasi}"
                                 android:textColor="@color/black" />
 
                             <ImageView
@@ -240,6 +243,7 @@
                         android:layout_height="50dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="20dp"
+                        android:enabled="@{TextUtils.isEmpty(viewModel.dilItem.cabut_siaga) ? true : false}"
                         android:layout_marginBottom="10dp"
                         android:fontFamily="@font/roboto_bold"
                         android:text="Validasi"

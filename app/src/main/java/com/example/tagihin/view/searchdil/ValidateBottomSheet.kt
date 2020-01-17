@@ -51,7 +51,6 @@ class ValidateBottomSheet : BottomSheet(),
     var binding: ValidateDilBtmSheetLayoutBinding? = null
     lateinit var datePickerDialog: DatePickerDialog
     lateinit var mActivity: SearchDilActivity
-    lateinit var formatter : DecimalFormat
     var observer : Observer<Boolean>? = null
     val viewModel : SearchDilViewModel by sharedViewModel()
     override fun onCreateView(
@@ -91,6 +90,8 @@ class ValidateBottomSheet : BottomSheet(),
                     this?.tagihan =
                         viewModel.calculateBill(this?.jumlah_kwh!!, viewModel.cost.value?.toInt()!!)
                 }
+                val x = dilValidate?.jumlah_kwh
+                val y = dilValidate?.tagihan
                 viewModel.dilValidate.value = dilValidate
             }
         })
@@ -144,6 +145,7 @@ class ValidateBottomSheet : BottomSheet(),
 
     fun hideBtmSheet() {
         this.dismiss()
+        viewModel.searchDil(mActivity.getCurrentQuery())
     }
 
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {

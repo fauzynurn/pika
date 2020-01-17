@@ -7,6 +7,7 @@ import com.example.tagihin.view.detail.BillViewModel
 import com.example.tagihin.view.home.HomeViewModel
 import com.example.tagihin.view.login.LoginViewModel
 import com.example.tagihin.view.bill.savedbill.SavedBillViewModel
+import com.example.tagihin.view.officer.OfficerListViewModel
 import com.example.tagihin.view.searchdil.SearchDilViewModel
 import com.example.tagihin.view.settings.SettingViewModel
 import com.example.tagihin.view.workorder.pending.PendingWorkOrderViewModel
@@ -26,4 +27,5 @@ val viewModelModule = module {
     viewModel{ BillViewModel(get()) }
     viewModel { SettingViewModel(get()) }
     viewModel { SearchDilViewModel(get()) }
+    viewModel {OfficerListViewModel(get())}
 }

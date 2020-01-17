@@ -248,6 +248,7 @@ class ConfirmBottomSheet(val dilItem: DilItemResponse) : BottomSheet(),
 
     fun hideBtmSheet() {
         this.dismiss()
+        viewModel.searchDil(mActivity.getCurrentQuery())
     }
 
     fun checkPermission(label: String, type: String) {

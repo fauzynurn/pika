@@ -52,6 +52,12 @@ class UnpaidRepository (val apiService : ApiService,
             pref.getUsername()!!,pref.getPrivilege(),list
         )
     }
+
+    fun transferBill(username : String, list : HashMap<String,Int>) : Maybe<Response<GeneralResponse>> {
+        return apiService.transferBill(
+            pref.getUsername()!!,pref.getPrivilege(),username,list
+        )
+    }
     /**
      * When refresh is called, we simply run a fresh network request and when it arrives, clear
      * the database table and insert all new items in a transaction.

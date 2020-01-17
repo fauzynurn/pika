@@ -47,7 +47,7 @@ class SearchDilViewModel(val repo: SearchDilRepository) : ViewModel() {
             it?.y_upload.throwZeroIfNull()
         )
     }
-    var latLongFinal = MutableLiveData<Pair<Double?, Double?>>(Pair(0.0,0.0))
+    var latLongFinal = MutableLiveData<Pair<Double?, Double?>>(Pair(0.0, 0.0))
     var latLong: LiveData<Pair<Double?, Double?>> =
         Transformations.map(dilItemRequest) {
             Pair(it?.x_upload?.toDouble(), it?.y_upload?.toDouble())
@@ -61,9 +61,16 @@ class SearchDilViewModel(val repo: SearchDilRepository) : ViewModel() {
             .subscribe({
                 loadingState.postValue(false)
                 dilItem.postValue(it?.body()?.data)
-                if(it?.body()?.data?.id?.isNotEmpty()!!) {
+                if (it?.body()?.data?.id?.isNotEmpty()!!) {
                     dilValidate.value?.id = it.body()?.data?.id!!.toInt()
-                    cabutSiaga.postValue(it.body()?.data?.pasang_siaga!!)
+                    if (!it.body()?.data?.cabut_siaga.isNullOrEmpty()) {
+                        cabutSiaga.postValue(it.body()?.data?.cabut_siaga?.toInt())
+                    } else {
+                        cabutSiaga.postValue(it.body()?.data?.pasang_siaga!!)
+                    }
+                    if (!it.body()?.data?.tarif_listrik.isNullOrEmpty()) {
+                        cost.postValue(it.body()?.data?.tarif_listrik?.toInt())
+                    }
                 }
             }, {
                 error.postValue(it.message!!)
@@ -110,9 +117,9 @@ class SearchDilViewModel(val repo: SearchDilRepository) : ViewModel() {
         return this ?: 0
     }
 
-    fun calculateKwhUsed(cabutSiaga: Int, pasangSiaga: Int) : Int = cabutSiaga.minus(pasangSiaga)
+    fun calculateKwhUsed(cabutSiaga: Int, pasangSiaga: Int): Int = cabutSiaga.minus(pasangSiaga)
 
-    fun calculateBill(kwhUsed : Int, cost : Int) : Int = (kwhUsed * cost * 0.1).toInt()
+    fun calculateBill(kwhUsed: Int, cost: Int): Int =((kwhUsed * cost) + (kwhUsed * cost * 0.1) + 5000).toInt()
 
     @SuppressLint("CheckResult")
     fun sendValidationForm() {

@@ -31,9 +31,9 @@ data class DilItemResponse (
     var foto_siaga : String? = null,
     var foto_rusak : String? = null,
     var foto_bangunan : String? = null,
-    var tanggal_validasi : String? = null,
-    var cabut_siaga : String? = null,
-    var tarif_listrik : String? = null
+    var tanggal_validasi : String? = "",
+    var cabut_siaga : String? = "",
+    var tarif_listrik : String? = ""
 )
 
 data class DilItemRequest (

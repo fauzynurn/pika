@@ -34,6 +34,7 @@
         <activity android:name=".view.settings.SettingActivity" android:theme="@style/AppTheme"/>
         <activity android:name=".view.searchdil.SearchDilActivity" android:theme="@style/AppTheme"/>
         <activity android:name=".utils.ImagePickerActivity" android:theme="@style/AppTheme"/>
+        <activity android:name=".view.officer.OfficerListActivity" android:theme="@style/AppTheme"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

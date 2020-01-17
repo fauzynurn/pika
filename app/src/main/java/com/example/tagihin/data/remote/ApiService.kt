@@ -33,11 +33,30 @@ interface ApiService {
     ): Maybe<Response<GeneralResponse>>
 
     @FormUrlEncoded
+    @POST("Api/transfer_tagihan")
+    fun transferBill(
+        @Field("username") username : String,
+        @Field("level_user") levelUser : Int,
+        @Field("petugas") recipient : String,
+        @FieldMap request : HashMap<String,Int>
+    ): Maybe<Response<GeneralResponse>>
+
+    @FormUrlEncoded
     @POST("Api/reset_WO")
     fun resetWo(
         @Field("username") username : String,
         @Field("level_user") levelUser : Int
     ): Maybe<Response<GeneralResponse>>
+
+    @FormUrlEncoded
+    @POST("Api/get_petugas")
+    fun getOfficerList(
+        @Field("username") username : String,
+        @Field("level_user") levelUser : Int,
+        @Field("query") query : String,
+        @Field("page") page : Int,
+        @Field("size") size : Int
+    ): Maybe<Response<OfficerList>>
 
     @FormUrlEncoded
     @POST("Api/reset_tagihan")
