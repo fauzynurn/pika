@@ -101,9 +101,16 @@
                             android:fontFamily="@font/roboto_medium"
                             android:lineSpacingExtra="7sp"
                             android:textColor="@color/black"
+                            tools:text="Title"
                             android:textSize="18sp"
                             android:textStyle="normal" />
 
+                        <ImageView
+                            android:layout_alignParentEnd="true"
+                            android:id="@+id/refresh_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_refresh_black_24dp"/>
                     </RelativeLayout>
 
                 </androidx.appcompat.widget.Toolbar>

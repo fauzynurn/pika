@@ -10,8 +10,7 @@ import com.example.tagihin.view.bill.savedbill.SavedBillViewModel
 import com.example.tagihin.view.officer.OfficerListViewModel
 import com.example.tagihin.view.searchdil.SearchDilViewModel
 import com.example.tagihin.view.settings.SettingViewModel
-import com.example.tagihin.view.workorder.pending.PendingWorkOrderViewModel
-import com.example.tagihin.view.workorder.unpaid.UnpaidWorkOrderViewModel
+import com.example.tagihin.view.workorder.WorkOrderViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -20,8 +19,7 @@ val viewModelModule = module {
     viewModel { PaidViewModel(get() ) }
     viewModel { PendingViewModel(get() ) }
     viewModel { UnpaidViewModel(get() ) }
-    viewModel { UnpaidWorkOrderViewModel(get() ) }
-    viewModel { PendingWorkOrderViewModel(get() ) }
+    viewModel { WorkOrderViewModel(get(),get()) }
     viewModel { SavedBillViewModel(get() ) }
     viewModel { HomeViewModel(get()) }
     viewModel{ BillViewModel(get()) }

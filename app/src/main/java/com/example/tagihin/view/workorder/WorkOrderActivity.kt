@@ -16,8 +16,9 @@ import com.example.tagihin.view.workorder.unpaid.UnpaidWorkOrderFragment
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
 
-class WorkOrderActivity : BaseActivity<HomeViewModel, ActivityWorkOrderBinding>(
-    HomeViewModel::class){
+class WorkOrderActivity : BaseActivity<WorkOrderViewModel, ActivityWorkOrderBinding>(
+    WorkOrderViewModel::class
+) {
     override fun getLayoutRes(): Int = R.layout.activity_work_order
 
     override fun showMessage(message: String) {
@@ -35,10 +36,12 @@ class WorkOrderActivity : BaseActivity<HomeViewModel, ActivityWorkOrderBinding>(
         dataBinding.backIcon.setOnClickListener {
             finish()
         }
-
+        dataBinding.refreshBtn.setOnClickListener {
+            viewModel.refreshAll()
+        }
         dataBinding.savedBillBtn.setOnClickListener {
             startActivity(
-                Intent(this,SavedBillActivity::class.java)
+                Intent(this, SavedBillActivity::class.java)
             )
         }
         dataBinding.viewPager.adapter = adapter

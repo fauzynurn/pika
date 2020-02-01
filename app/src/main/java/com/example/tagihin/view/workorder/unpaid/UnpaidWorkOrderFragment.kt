@@ -20,8 +20,9 @@ import com.example.tagihin.view.bill.unpaid.UnpaidViewModel
 import com.example.tagihin.view.detail.DetailBillActivity
 import com.example.tagihin.view.home.*
 import com.example.tagihin.view.workorder.WorkOrderActivity
+import com.example.tagihin.view.workorder.WorkOrderViewModel
 
-class UnpaidWorkOrderFragment : BaseFragment<UnpaidWorkOrderViewModel, FragmentUnpaidBinding>(UnpaidWorkOrderViewModel::class){
+class UnpaidWorkOrderFragment : BaseFragment<WorkOrderViewModel, FragmentUnpaidBinding>(WorkOrderViewModel::class){
     var billAdapter: UnpaidWorkOrderAdapter? = null
     val layoutManager = LinearLayoutManager(activity)
     private var woList: MutableList<Int> = mutableListOf()
@@ -34,9 +35,9 @@ class UnpaidWorkOrderFragment : BaseFragment<UnpaidWorkOrderViewModel, FragmentU
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         dataBinding.swipeRefresh.setOnRefreshListener {
-            viewModel.refresh()
+            viewModel.refreshUnpaid()
         }
-        viewModel.refreshState.observe(mActivity, Observer {
+        viewModel.unpaidRefreshState.observe(mActivity, Observer {
             dataBinding.swipeRefresh.isRefreshing = it == NetworkState.LOADING
         })
     }
@@ -79,7 +80,7 @@ class UnpaidWorkOrderFragment : BaseFragment<UnpaidWorkOrderViewModel, FragmentU
 
             },
             {
-                viewModel.retry()
+                viewModel.retryUnpaid()
             }, false,
             object : DiffUtil.ItemCallback<UnpaidWorkOrder>() {
                 override fun areItemsTheSame(oldItem: UnpaidWorkOrder, newItem: UnpaidWorkOrder): Boolean =
@@ -94,11 +95,11 @@ class UnpaidWorkOrderFragment : BaseFragment<UnpaidWorkOrderViewModel, FragmentU
             layoutManager = LinearLayoutManager(activity as WorkOrderActivity)
             adapter = billAdapter
         }
-        viewModel.networkState.observe(this, Observer {
+        viewModel.unpaidNetworkState.observe(this, Observer {
             billAdapter?.setNetworkState(it)
         })
-        viewModel.shouldTriggerSomething.value = "changed"
-        viewModel.posts.observe(this, Observer {
+        viewModel.shouldTriggerSomethingUnpaid.value = "changed"
+        viewModel.unpaidPosts.observe(this, Observer {
             billAdapter?.submitList(it)
         })
     }

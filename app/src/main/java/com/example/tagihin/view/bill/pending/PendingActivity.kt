@@ -39,6 +39,9 @@ class PendingActivity : BaseActivity<PendingViewModel, ActivityBillBinding>(Pend
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        dataBinding.refreshBtn.setOnClickListener {
+            viewModel.refresh()
+        }
         supportFragmentManager.beginTransaction()
             .add(R.id.bill_viewpager, PendingFragment(), LIST_FRAGMENT)
             .add(R.id.bill_viewpager, PendingSearchFragment(), SEARCH_LIST_FRAGMENT)
