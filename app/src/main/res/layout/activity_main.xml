@@ -64,6 +64,12 @@
                                     android:layout_centerVertical="true"
                                     android:src="@drawable/ic_menu_black_24dp" />
 
+                                <ImageView
+                                    android:id="@+id/refresh_btn"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_refresh_black_24dp"/>
                             </RelativeLayout>
                         </androidx.appcompat.widget.Toolbar>
 

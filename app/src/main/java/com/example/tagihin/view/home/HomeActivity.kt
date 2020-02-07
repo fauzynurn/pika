@@ -41,9 +41,10 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityMainBinding>(HomeViewMo
                 drawerContainer.openDrawer(drawer.root)
             }
             swipeRefresh.setOnRefreshListener {
-                chartContainer.visibility = View.GONE
-                progressBar.visibility = View.VISIBLE
-                viewModel.getBillStat()
+                refresh()
+            }
+            refreshBtn.setOnClickListener {
+                refresh()
             }
             drawer.logoutContainer.setOnClickListener {
                 pref.setLoginStatus(false)
@@ -137,6 +138,13 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityMainBinding>(HomeViewMo
         dataBinding.progressBar.visibility = if (isVisible) View.GONE else View.VISIBLE
     }
 
+    fun refresh(){
+        with(dataBinding) {
+            chartContainer.visibility = View.GONE
+            progressBar.visibility = View.VISIBLE
+        }
+        viewModel.getBillStat()
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == DETAIL) {

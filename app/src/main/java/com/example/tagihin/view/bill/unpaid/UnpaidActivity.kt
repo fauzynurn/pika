@@ -77,6 +77,9 @@ class UnpaidActivity : BaseActivity<UnpaidViewModel, ActivityBillBinding>(Unpaid
 //            override fun onDestroyActionMode(mode: ActionMode?) {}
 //        }
 
+        dataBinding.refreshBtn.setOnClickListener {
+            viewModel.refresh()
+        }
         supportFragmentManager.beginTransaction()
             .add(R.id.bill_viewpager, UnpaidFragment(), LIST_FRAGMENT)
             .add(R.id.bill_viewpager, UnpaidSearchFragment(), SEARCH_LIST_FRAGMENT)

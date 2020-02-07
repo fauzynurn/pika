@@ -17,9 +17,10 @@ import com.example.tagihin.utils.Consts
 import com.example.tagihin.view.bill.savedbill.SavedBillViewModel
 import com.example.tagihin.view.detail.DetailBillActivity
 import com.example.tagihin.view.workorder.WorkOrderActivity
+import com.example.tagihin.view.workorder.WorkOrderViewModel
 
-class PendingWorkOrderFragment : BaseFragment<PendingWorkOrderViewModel, FragmentPendingBinding>(
-    PendingWorkOrderViewModel::class){
+class PendingWorkOrderFragment : BaseFragment<WorkOrderViewModel, FragmentPendingBinding>(
+    WorkOrderViewModel::class){
     var billAdapter: PendingWorkOrderAdapter? = null
     val layoutManager = LinearLayoutManager(activity)
     lateinit var mActivity : WorkOrderActivity
@@ -32,9 +33,9 @@ class PendingWorkOrderFragment : BaseFragment<PendingWorkOrderViewModel, Fragmen
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         dataBinding.swipeRefresh.setOnRefreshListener {
-            viewModel.refresh()
+            viewModel.refreshPending()
         }
-        viewModel.refreshState.observe(mActivity, Observer {
+        viewModel.pendingRefreshState.observe(mActivity, Observer {
             dataBinding.swipeRefresh.isRefreshing = it == NetworkState.LOADING
         })
     }
@@ -76,7 +77,7 @@ class PendingWorkOrderFragment : BaseFragment<PendingWorkOrderViewModel, Fragmen
 
             },
             {
-                viewModel.retry()
+                viewModel.retryPending()
             }, false,
             object : DiffUtil.ItemCallback<PendingWorkOrder>() {
                 override fun areItemsTheSame(
@@ -97,11 +98,11 @@ class PendingWorkOrderFragment : BaseFragment<PendingWorkOrderViewModel, Fragmen
             layoutManager = LinearLayoutManager(activity as WorkOrderActivity)
             adapter = billAdapter
         }
-        viewModel.networkState.observe(this, Observer {
+        viewModel.pendingNetworkState.observe(this, Observer {
             billAdapter?.setNetworkState(it)
         })
-        viewModel.shouldTriggerSomething.value = "changed"
-        viewModel.posts.observe(this, Observer {
+        viewModel.shouldTriggerSomethingPending.value = "changed"
+        viewModel.pendingPosts.observe(this, Observer {
             billAdapter?.submitList(it)
         })
     }
